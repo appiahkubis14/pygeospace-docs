@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>pygeospace — Documentation</title>
+<title>PyGeoSpace — Documentation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -174,6 +174,26 @@ td code{font-family:var(--mono);font-size:11.5px;background:var(--bg-raised);bor
 .sec-list li{font-size:13px;color:var(--text-secondary);line-height:1.5;padding-left:16px;position:relative;}
 .sec-list li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:600;}
 .sec-list.todo li::before{content:"○";color:var(--text-muted);}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px;margin:16px 0;}
+.gcard{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:border-color .15s,transform .15s,box-shadow .15s;}
+.gcard:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.06);}
+.gthumb{position:relative;aspect-ratio:16/10;background:var(--bg-raised);overflow:hidden;}
+.gthumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.gfallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--text-muted);font-family:var(--mono);font-size:11px;text-align:center;padding:12px;background:repeating-linear-gradient(45deg,var(--bg-raised),var(--bg-raised) 10px,var(--bg-code) 10px,var(--bg-code) 20px);}
+.gfallback .gf-ico{font-size:22px;opacity:.6;}
+.gtag{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:10px;font-weight:500;padding:2px 9px;border-radius:10px;backdrop-filter:blur(4px);border:1px solid transparent;}
+.gtag.now{background:var(--green-dim);color:var(--green);}
+.gtag.soon{background:var(--amber-dim);color:var(--amber);}
+.gmeta{padding:12px 14px;}
+.gtitle{font-size:13px;font-weight:600;margin-bottom:3px;}
+.gdesc{font-size:12px;color:var(--text-secondary);line-height:1.5;}
+.gpath{font-family:var(--mono);font-size:10.5px;color:var(--text-muted);margin-top:7px;}
+.gallery-cat{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:26px 0 4px;font-weight:500;}
+.api-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:16px 0;}
+.api-step{background:var(--bg-surface);padding:16px 18px;}
+.api-step .as-n{font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-bottom:7px;}
+.api-step .as-k{font-family:var(--mono);font-size:12.5px;color:var(--accent);font-weight:600;margin-bottom:5px;word-break:break-word;}
+.api-step .as-d{font-size:12px;color:var(--text-secondary);line-height:1.45;}
 footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:40px 64px 24px;}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:32px;max-width:900px;}
 .f-logo{font-size:15px;font-weight:600;margin-bottom:8px;}.f-logo span{color:var(--accent);}
@@ -193,17 +213,18 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
 <body>
 <nav>
   <div class="nav-inner">
-    <div class="nav-logo">🗺️ <span>py</span>geospace</div>
+    <div class="nav-logo">🗺️ <span>Py</span>GeoSpace</div>
     <div class="nav-links">
       <a href="#quickstart">Quick Start</a>
       <a href="#concepts">Concepts</a>
       <a href="#api">Python API</a>
       <a href="#cli">CLI</a>
       <a href="#examples">Examples</a>
+      <a href="#gallery">Gallery</a>
       <a href="#roadmap">Roadmap</a>
     </div>
     <div class="nav-right">
-      <span class="version-badge">v0.1.0</span>
+      <span class="version-badge">v0.6.1</span>
       <a href="https://github.com/your-org/pygeospace" class="nav-gh" target="_blank">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34C3.73 14.36 3.26 12.9 3.26 12.9c-.36-.92-.88-1.16-.88-1.16-.72-.49.05-.48.05-.48.8.06 1.22.82 1.22.82.71 1.22 1.86.87 2.31.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.67 7.67 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>
         GitHub
@@ -228,28 +249,36 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
     <a href="#concepts" class="sb-link">The Map</a>
     <a href="#concept-layers" class="sb-link">Layers</a>
     <a href="#concept-read" class="sb-link">Reading Data</a>
-    <a href="#concept-style" class="sb-link">Styling</a>
-    <a href="#concept-basemaps" class="sb-link">Basemaps</a>
-    <a href="#concept-export" class="sb-link">HTML Export</a>
+    <a href="#concept-raster" class="sb-link">Rasters &amp; Imagery</a>
+    <a href="#concept-spectral" class="sb-link">Spectral Analysis</a>
+    <a href="#concept-3d" class="sb-link">The 3D Engine</a>
+    <a href="#concept-export" class="sb-link">Interactive Export</a>
   </div>
   <div class="sb-section">
     <div class="sb-title">Python API</div>
     <a href="#api" class="sb-link">Overview</a>
+    <a href="#api-glance" class="sb-link sub">At a glance</a>
+    <a href="#api-model" class="sb-link sub">Mental model</a>
     <a href="#api-map" class="sb-link sub">Map</a>
-    <a href="#api-vectorlayer" class="sb-link sub">VectorLayer</a>
-    <a href="#api-read" class="sb-link sub">read()</a>
+    <a href="#api-camera" class="sb-link sub">Camera3D</a>
+    <a href="#api-analytics" class="sb-link sub">Analytics</a>
   </div>
   <div class="sb-section">
     <div class="sb-title">CLI</div>
     <a href="#cli" class="sb-link">Overview</a>
     <a href="#cli-visualize" class="sb-link sub">visualize</a>
-    <a href="#cli-info" class="sb-link sub">info</a>
+    <a href="#cli-3d" class="sb-link sub">3d</a>
+    <a href="#cli-spectral" class="sb-link sub">spectral</a>
   </div>
   <div class="sb-section">
     <div class="sb-title">Examples</div>
-    <a href="#examples" class="sb-link">Cities map</a>
-    <a href="#example-filter" class="sb-link">Filtering features</a>
-    <a href="#example-file" class="sb-link">From a file</a>
+    <a href="#examples" class="sb-link">Vector map</a>
+    <a href="#example-imagery" class="sb-link">Satellite imagery</a>
+    <a href="#example-3d" class="sb-link">3D terrain</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-title">Gallery</div>
+    <a href="#gallery" class="sb-link">Output gallery</a>
   </div>
   <div class="sb-section">
     <div class="sb-title">Reference</div>
@@ -263,9 +292,9 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
 
 <!-- HERO -->
 <div class="hero" id="overview">
-  <div class="badge"><span class="badge-dot"></span>v0.1.0 · Foundation release · honest scope</div>
-  <h1 class="hero-title"><strong>pygeospace</strong> Documentation</h1>
-  <p class="hero-sub">A small, dependency-light geospatial visualization toolkit for Python. Read GeoJSON, attach styled vector layers to a map, and export a standalone interactive HTML map you can open in any browser — no build step, no server.</p>
+  <div class="badge"><span class="badge-dot"></span>v0.6.1 · 2D + true 3D · 100 tests passing</div>
+  <h1 class="hero-title"><strong>PyGeoSpace</strong> Documentation</h1>
+  <p class="hero-sub">A geospatial visualization toolkit for Python that spans 2D web maps and true 3D scenes. Stack vector, raster and point-cloud layers; run spectral and spatial analytics; and export either a rich interactive HTML map — with a full control suite — or a real 3D model. No build step, no server.</p>
   <div class="hero-actions">
     <a href="#quickstart" class="btn-primary">Quick Start →</a>
     <a href="#api" class="btn-outline">Python API</a>
@@ -276,12 +305,12 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
     </a>
   </div>
   <div class="hero-stats">
-    <div class="hstat"><div class="hstat-val">2</div><div class="hstat-label">Input formats*</div></div>
-    <div class="hstat"><div class="hstat-val">3</div><div class="hstat-label">Built-in basemaps</div></div>
-    <div class="hstat"><div class="hstat-val">1</div><div class="hstat-label">Core dependency</div></div>
-    <div class="hstat"><div class="hstat-val">5</div><div class="hstat-label">Tests passing</div></div>
+    <div class="hstat"><div class="hstat-val">2D + 3D</div><div class="hstat-label">Render modes</div></div>
+    <div class="hstat"><div class="hstat-val">5</div><div class="hstat-label">Built-in basemaps</div></div>
+    <div class="hstat"><div class="hstat-val">6</div><div class="hstat-label">3D export formats</div></div>
+    <div class="hstat"><div class="hstat-val">100</div><div class="hstat-label">Tests passing</div></div>
   </div>
-  <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">*GeoJSON with zero extra deps; Shapefile / GeoPackage / KML / GPX via the optional <code class="ci">[formats]</code> extra (GeoPandas).</p>
+  <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">Vector via GeoPandas · rasters via rasterio · true 3D via PyVista · interactive maps via deck.gl. Heavy backends are optional extras.</p>
 </div>
 
 <!-- INSTALL BAR -->
@@ -290,8 +319,9 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
     <span class="install-label">$ install</span>
     <div class="install-tabs">
       <button class="itab active" onclick="setInstall('core',this)">core</button>
-      <button class="itab" onclick="setInstall('formats',this)">+formats</button>
-      <button class="itab" onclick="setInstall('dev',this)">dev</button>
+      <button class="itab" onclick="setInstall('raster',this)">+raster</button>
+      <button class="itab" onclick="setInstall('threed',this)">+3d</button>
+      <button class="itab" onclick="setInstall('all',this)">all</button>
     </div>
     <div class="install-box">
       <span class="install-cmd" id="install-cmd">pip install pygeospace</span>
@@ -306,47 +336,50 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
 <div class="doc-section" id="quickstart">
   <div class="sec-label">Getting Started</div>
   <h2 class="sec-title">Up and running in 2 minutes</h2>
-  <p class="sec-sub">The core install has a single dependency (Click, for the CLI) and reads GeoJSON out of the box. Build a map in a few lines of Python, or straight from the command line.</p>
+  <p class="sec-sub">Build a 2D map from a GeoDataFrame, drape satellite imagery, or spin up a 3D terrain scene — each is a few chained calls. The API returns its objects so calls compose into one line.</p>
   <div class="steps-grid">
     <div class="step-card">
       <div class="step-card-header"><div class="step-num">1</div><div class="step-title">Install</div></div>
-      <div class="step-code"><span class="tc"># Core — GeoJSON + HTML export</span>
+      <div class="step-code"><span class="tc"># Core — 2D maps + interactive HTML</span>
 pip install pygeospace
 
-<span class="tc"># + Shapefile / GeoPackage / KML / GPX</span>
-pip install "pygeospace[formats]"</div>
+<span class="tc"># + rasters (rasterio) and 3D (PyVista)</span>
+pip install "pygeospace[raster,3d]"</div>
     </div>
     <div class="step-card">
       <div class="step-card-header"><div class="step-num">2</div><div class="step-title">Verify</div></div>
       <div class="step-code">pygeospace --version
-<span class="tc"># → pygeospace, version 0.1.0</span>
+<span class="tc"># → pygeospace, version 0.6.1</span>
 
 pygeospace --help
-<span class="tc"># lists: visualize, info, version</span></div>
+<span class="tc"># visualize · info · 3d · spectral …</span></div>
     </div>
     <div class="step-card">
-      <div class="step-card-header"><div class="step-num">3</div><div class="step-title">Build a map (Python)</div></div>
+      <div class="step-card-header"><div class="step-num">3</div><div class="step-title">A 2D map (Python)</div></div>
+      <div class="step-code">import pygeospace as pgs
+import geopandas as gpd
+
+gdf = gpd.read_file("cities.geojson")
+m = pgs.Map()
+m.add_basemap()
+m.add_layer(gdf, name="Cities").style(
+    get_fill_color=[229, 62, 62, 200],
+    get_radius=120)
+m.fit().save("map.html")</div>
+    </div>
+    <div class="step-card">
+      <div class="step-card-header"><div class="step-num">4</div><div class="step-title">A 3D terrain scene</div></div>
       <div class="step-code">import pygeospace as pgs
 
-layer = pgs.read("cities.geojson",
-                 color="#e53e3e", radius=9)
-m = pgs.Map(center=(0, 25), zoom=2,
-            basemap="carto-light")
-m.add_layer(layer)
-m.save("map.html")</div>
-    </div>
-    <div class="step-card">
-      <div class="step-card-header"><div class="step-num">4</div><div class="step-title">…or from the CLI</div></div>
-      <div class="step-code">pygeospace visualize cities.geojson \
-  --output map.html \
-  --color "#e53e3e" \
-  --radius 9 \
-  --basemap carto-light
-<span class="tc"># Wrote map.html (N features).</span></div>
+m = pgs.Map(mode="3d")
+m.add_terrain("dem.tif", exaggeration=2.0,
+              cmap="gist_earth")
+m.render_3d("terrain.png")   <span class="tc"># static</span>
+m.export_3d("terrain.glb")   <span class="tc"># 3D model</span></div>
     </div>
   </div>
 
-  <div class="alert alert-info"><strong>What you get:</strong> <code class="ci">map.html</code> is fully standalone — open it in any browser for a pan / zoom / click map. MapLibre GL is loaded from a CDN at view time; there is no server and no build step.</div>
+  <div class="alert alert-info"><strong>What you get:</strong> <code class="ci">map.html</code> is a standalone interactive map with a full control suite — layer toggles, opacity sliders, a basemap switcher, navigation, a live scale bar, a coordinate readout, fullscreen and a legend. deck.gl loads from a CDN at view time; there's no server and no build step.</div>
 
   <h3 id="demo">Interactive demo — try the CLI</h3>
   <p>Pick a command and click Run to see the output it produces:</p>
@@ -361,7 +394,8 @@ m.save("map.html")</div>
         <option value="help">pygeospace --help</option>
         <option value="info">pygeospace info</option>
         <option value="visualize">pygeospace visualize</option>
-        <option value="visualize_missing">visualize — unsupported format</option>
+        <option value="threed">pygeospace 3d terrain</option>
+        <option value="spectral">pygeospace spectral</option>
       </select>
     </div>
     <div class="term-body" id="termBody"><span class="term-prompt">$ </span><span class="term-cmd">pygeospace --version</span>
@@ -377,187 +411,247 @@ m.save("map.html")</div>
 <!-- CORE CONCEPTS -->
 <div class="doc-section alt" id="concepts">
   <div class="sec-label">Core Concepts</div>
-  <h2 class="sec-title">How pygeospace fits together</h2>
-  <p class="sec-sub">Three objects do the work: a <code class="ci">Map</code> holds a view and a stack of layers, a <code class="ci">VectorLayer</code> wraps styled GeoJSON, and <code class="ci">read()</code> loads data into a layer. The map serializes itself to a self-contained HTML file.</p>
+  <h2 class="sec-title">How PyGeoSpace fits together</h2>
+  <p class="sec-sub">One object holds everything: a <code class="ci">Map</code> created in <code class="ci">"2d"</code> or <code class="ci">"3d"</code> mode. You stack typed layers onto it with chainable <code class="ci">add_*</code> methods, optionally run analytics, then export — to an interactive HTML map, a static image, or a 3D model file.</p>
 
   <div class="feat-grid">
     <div class="feat-cell">
       <div class="feat-icon">🗺️</div>
-      <div class="feat-title">Map</div>
-      <div class="feat-body">A view state (center, zoom, basemap) plus an ordered list of layers. Knows how to serialize to a dict and render to standalone HTML.</div>
+      <div class="feat-title">Map (2D)</div>
+      <div class="feat-body">A deck.gl scene: basemap tiles, vector layers, heatmaps, text labels and georeferenced rasters, exported to a rich interactive HTML page.</div>
     </div>
     <div class="feat-cell">
-      <div class="feat-icon">📍</div>
-      <div class="feat-title">VectorLayer</div>
-      <div class="feat-body">Wraps a GeoJSON FeatureCollection with a small style dict. Points, lines and polygons each pick the right draw type automatically.</div>
+      <div class="feat-icon green">⛰️</div>
+      <div class="feat-title">Map (3D)</div>
+      <div class="feat-body">A PyVista scene: terrain surfaces, extruded polygons, 3D point clouds and a scriptable camera. Renders headlessly and exports to glTF/GLB/STL/PLY/OBJ/VTK.</div>
     </div>
     <div class="feat-cell">
-      <div class="feat-icon green">📥</div>
-      <div class="feat-title">read()</div>
-      <div class="feat-body">Loads a file into a VectorLayer. GeoJSON needs nothing extra; other vector formats route through GeoPandas when installed.</div>
+      <div class="feat-icon amber">🧮</div>
+      <div class="feat-title">Analytics</div>
+      <div class="feat-body">Buffers in true metres, spatial overlays, K-means / DBSCAN / H3 clustering, choropleth classification, and spectral indices (NDVI, NDWI, …).</div>
     </div>
   </div>
 
   <h3 id="concept-layers">Layers</h3>
-  <p><code class="ci">Layer</code> is the abstract base. <code class="ci">VectorLayer</code> is the implemented subclass today. Raster, point-cloud and streaming layers are on the roadmap and are intentionally not shipped yet — calls into those paths raise a clear error rather than silently doing nothing.</p>
+  <p>Every layer derives from <code class="ci">Layer</code>. The four concrete types below are all implemented; <code class="ci">add_layer()</code> accepts a GeoDataFrame, a GeoSeries, or a path and picks the right draw type automatically.</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Layer</th><th>Status</th><th>Backed by</th></tr></thead>
       <tbody>
-        <tr><td><code>VectorLayer</code></td><td><span style="color:var(--green)">✓ Implemented</span></td><td>GeoJSON FeatureCollection</td></tr>
-        <tr><td><code>RasterLayer</code></td><td><span style="color:var(--text-muted)">○ Planned</span></td><td>COG via tile server (roadmap)</td></tr>
-        <tr><td><code>PointCloudLayer</code></td><td><span style="color:var(--text-muted)">○ Planned</span></td><td>LAS/LAZ, 3D Tiles (roadmap)</td></tr>
-        <tr><td><code>StreamLayer</code></td><td><span style="color:var(--text-muted)">○ Planned</span></td><td>WebSocket source (roadmap)</td></tr>
+        <tr><td><code>VectorLayer</code></td><td><span style="color:var(--green)">✓ Implemented</span></td><td>GeoDataFrame / GeoJSON — points, lines, polygons</td></tr>
+        <tr><td><code>RasterLayer</code></td><td><span style="color:var(--green)">✓ Implemented</span></td><td>NumPy array + transform/CRS (rasterio)</td></tr>
+        <tr><td><code>PointCloudLayer</code></td><td><span style="color:var(--green)">✓ Implemented</span></td><td>XYZ points; 3D scene + LAS classification colors</td></tr>
+        <tr><td><code>StreamLayer</code></td><td><span style="color:var(--green)">✓ Implemented</span></td><td>WebSocket / MQTT source</td></tr>
       </tbody>
     </table>
   </div>
 
   <h3 id="concept-read">Reading data</h3>
-  <p><code class="ci">read()</code> auto-detects by extension. GeoJSON is parsed with the standard library. The formats below require the optional <code class="ci">[formats]</code> extra (GeoPandas); without it, <code class="ci">read()</code> raises <code class="ci">NotImplementedError</code> with an install hint instead of failing obscurely.</p>
+  <p>Vector data flows in through GeoPandas, so anything GeoPandas reads (Shapefile, GeoPackage, GeoJSON, KML, GPX, FlatGeobuf, GML) works. <code class="ci">read_file()</code> and <code class="ci">detect_format()</code> auto-detect by extension and magic bytes. Rasters are read with rasterio.</p>
   <div class="format-grid">
-    <div class="fmt-card"><div class="fmt-name">.geojson / .json</div><div class="fmt-flag">core · no deps</div><div class="fmt-desc">Parsed directly. A single Feature is wrapped into a FeatureCollection.</div></div>
-    <div class="fmt-card"><div class="fmt-name">.shp</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">Shapefile via GeoPandas / Fiona.</div></div>
-    <div class="fmt-card"><div class="fmt-name">.gpkg</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">GeoPackage via GeoPandas.</div></div>
-    <div class="fmt-card"><div class="fmt-name">.kml / .gpx</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">KML and GPX tracks via GeoPandas.</div></div>
-    <div class="fmt-card"><div class="fmt-name">.fgb / .gml</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">FlatGeobuf and GML via GeoPandas.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.geojson / .json</div><div class="fmt-flag">vector</div><div class="fmt-desc">Parsed directly into a GeoDataFrame.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.shp / .gpkg</div><div class="fmt-flag">vector</div><div class="fmt-desc">Shapefile &amp; GeoPackage via GeoPandas.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.kml / .gpx</div><div class="fmt-flag">vector</div><div class="fmt-desc">KML and GPX tracks via GeoPandas.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.tif / .tiff</div><div class="fmt-flag">[raster]</div><div class="fmt-desc">GeoTIFF / COG via rasterio, windowed reads.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.las / .laz</div><div class="fmt-flag">[3d]</div><div class="fmt-desc">LIDAR point clouds with classification.</div></div>
   </div>
 
-  <h3 id="concept-style">Styling</h3>
-  <p>Every <code class="ci">VectorLayer</code> carries a style dict merged over sensible defaults. Pass overrides to <code class="ci">read()</code> / <code class="ci">VectorLayer(...)</code>, or call <code class="ci">set_style(**kwargs)</code>. Colors are plain CSS strings.</p>
+  <h3 id="concept-raster">Rasters &amp; imagery</h3>
+  <p><code class="ci">add_raster()</code> drapes a georeferenced raster on a 2D map as a deck.gl bitmap, reprojecting its bounds to lon/lat. Pass <code class="ci">bands=[r,g,b]</code> for a multi-band composite (true color, false-color IR, agriculture) or <code class="ci">cmap=</code> for a single-band colormap. Static <code class="ci">save("img.png")</code> renders the imagery itself, georeferenced, with any vector overlays on top.</p>
+  <div class="alert alert-ok"><strong>It's the image, not a screenshot.</strong> Raster layers participate in both interactive (<code class="ci">.html</code>) and static (<code class="ci">.png</code>/<code class="ci">.pdf</code>) export, and <code class="ci">fit()</code> frames the map to their extent.</div>
+
+  <h3 id="concept-spectral">Spectral analysis</h3>
+  <p>From a multi-band raster, compute normalized indices with <code class="ci">spectral_index(layer, "ndvi")</code> or the map-level <code class="ci">calculate_index("ndvi", band_nir=4, band_red=3)</code>. Band order follows the convention blue=1, green=2, red=3, nir=4, swir=5.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Key</th><th>Default</th><th>Applies to</th><th>Description</th></tr></thead>
+      <thead><tr><th>Index</th><th>Formula</th><th>Highlights</th></tr></thead>
       <tbody>
-        <tr><td><code>color</code></td><td><code>#2b6cb0</code></td><td>all</td><td>Fill / line / circle color.</td></tr>
-        <tr><td><code>opacity</code></td><td><code>0.8</code></td><td>all</td><td>Layer opacity, 0–1.</td></tr>
-        <tr><td><code>radius</code></td><td><code>6</code></td><td>points</td><td>Circle radius in pixels.</td></tr>
-        <tr><td><code>stroke_color</code></td><td><code>#1a365d</code></td><td>points / polygons</td><td>Outline color.</td></tr>
-        <tr><td><code>stroke_width</code></td><td><code>1</code></td><td>all</td><td>Outline / line width in pixels.</td></tr>
+        <tr><td><code>ndvi</code></td><td>(NIR − Red) / (NIR + Red)</td><td>Vegetation health</td></tr>
+        <tr><td><code>ndwi</code></td><td>(Green − NIR) / (Green + NIR)</td><td>Open water</td></tr>
+        <tr><td><code>ndbi</code></td><td>(SWIR − NIR) / (SWIR + NIR)</td><td>Built-up area</td></tr>
+        <tr><td><code>savi</code></td><td>soil-adjusted NDVI</td><td>Sparse canopy</td></tr>
+        <tr><td><code>evi</code></td><td>enhanced vegetation index</td><td>Dense canopy</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h3 id="concept-basemaps">Basemaps</h3>
-  <p>Three raster basemaps ship built in. Pass one to <code class="ci">Map(basemap=...)</code>. (Each pulls standard XYZ tiles; attribution is included in the exported map.)</p>
+  <h3 id="concept-3d">The 3D engine</h3>
+  <p>A <code class="ci">Map(mode="3d")</code> is a real PyVista scene that renders headlessly via an offscreen GL context. Build terrain from a DEM (<code class="ci">add_terrain</code>) or a meshgrid (<code class="ci">add_surface</code>), drop in a 3D point cloud (<code class="ci">add_pointcloud_3d</code>) or extruded polygons (<code class="ci">add_extruded</code>), drive a scriptable <code class="ci">Camera3D</code>, then <code class="ci">render_3d()</code> to PNG or <code class="ci">export_3d()</code> to an interactive HTML page or a model file.</p>
   <div class="format-grid">
-    <div class="fmt-card"><div class="fmt-name">carto-light</div><div class="fmt-flag">default</div><div class="fmt-desc">CARTO Positron — clean, light, good under colorful data.</div></div>
-    <div class="fmt-card"><div class="fmt-name">carto-dark</div><div class="fmt-flag">dark</div><div class="fmt-desc">CARTO Dark Matter — high-contrast dark canvas.</div></div>
-    <div class="fmt-card"><div class="fmt-name">osm</div><div class="fmt-flag">detailed</div><div class="fmt-desc">OpenStreetMap standard — full streets and labels.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.html</div><div class="fmt-flag">interactive</div><div class="fmt-desc">Self-contained 3D viewer (model-viewer / glTF).</div></div>
+    <div class="fmt-card"><div class="fmt-name">.gltf / .glb</div><div class="fmt-flag">web · DCC</div><div class="fmt-desc">For three.js, Blender, Unity.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.stl / .ply</div><div class="fmt-flag">mesh</div><div class="fmt-desc">3D print &amp; scanning toolchains.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.obj / .vtk</div><div class="fmt-flag">mesh · sci</div><div class="fmt-desc">DCC and scientific visualization.</div></div>
   </div>
 
-  <h3 id="concept-export">HTML export</h3>
-  <p><code class="ci">to_html()</code> returns the map as an HTML string; <code class="ci">save(path)</code> writes it to disk and returns the resolved path. The output embeds your data as GeoJSON and wires up MapLibre GL: navigation controls, hover cursors, and click-to-inspect popups showing each feature's properties.</p>
-  <div class="alert alert-warn"><strong>No browser storage:</strong> the exported page keeps all state in memory — it never uses localStorage or a backend. Drop it on static hosting (GitHub Pages, S3) and it just works.</div>
+  <h3 id="concept-export">Interactive HTML export</h3>
+  <p><code class="ci">to_html()</code> returns the map as a string; <code class="ci">save(path)</code> writes it and returns the resolved path. The 2D page ships with a control suite layered over the deck.gl canvas:</p>
+  <div class="feat-grid">
+    <div class="feat-cell"><div class="feat-icon neutral">🧱</div><div class="feat-title">Layer panel</div><div class="feat-body">Per-layer visibility toggle, opacity slider and color swatch.</div></div>
+    <div class="feat-cell"><div class="feat-icon neutral">🛰️</div><div class="feat-title">Basemap switcher</div><div class="feat-body">Carto Light/Dark/Voyager, OpenStreetMap, Esri Satellite.</div></div>
+    <div class="feat-cell"><div class="feat-icon neutral">🧭</div><div class="feat-title">Navigation &amp; tools</div><div class="feat-body">Zoom, reset, compass, scale bar, live coordinate readout, fullscreen and legend.</div></div>
+  </div>
+  <div class="alert alert-warn"><strong>No browser storage:</strong> the exported page keeps state in memory — never localStorage or a backend. The map renders first; each control wires up defensively, so a UI hiccup can't take the map down. Static <code class="ci">.png</code> exports are fully offline.</div>
 </div>
 
 <!-- PYTHON API -->
 <div class="doc-section" id="api">
   <div class="sec-label">Python API</div>
   <h2 class="sec-title">API Reference</h2>
-  <p class="sec-sub">The public surface is deliberately small: <code class="ci">Map</code>, <code class="ci">VectorLayer</code> (and its base <code class="ci">Layer</code>), and <code class="ci">read</code>. Everything is importable from the top-level package.</p>
+  <p class="sec-sub">Everything is importable from the top-level package. The center of gravity is <code class="ci">Map</code>; <code class="ci">Camera3D</code> drives 3D views, and the analytics functions live under <code class="ci">pygeospace.analytics</code>.</p>
 
   <div class="code-block">
     <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">imports</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <pre>import pygeospace as pgs
-from pygeospace import Map, VectorLayer, Layer, read</pre>
+from pygeospace import (Map, Camera3D, Layer, VectorLayer,
+                        RasterLayer, PointCloudLayer, StreamLayer,
+                        ViewState, read_file, detect_format)
+from pygeospace.analytics.spectral import spectral_index, composite</pre>
   </div>
+
+  <h3 id="api-glance">At a glance</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Kind</th><th>What it's for</th></tr></thead>
+      <tbody>
+        <tr><td><code>Map</code></td><td>class</td><td>2D or 3D scene; the main entry point</td></tr>
+        <tr><td><code>Camera3D</code></td><td>dataclass</td><td>Position / orbit / fly-through for 3D scenes</td></tr>
+        <tr><td><code>VectorLayer</code> · <code>RasterLayer</code></td><td>classes</td><td>Typed layers you stack on a Map</td></tr>
+        <tr><td><code>PointCloudLayer</code> · <code>StreamLayer</code></td><td>classes</td><td>3D points and live data sources</td></tr>
+        <tr><td><code>read_file()</code> · <code>detect_format()</code></td><td>functions</td><td>Load data / sniff a format</td></tr>
+        <tr><td><code>spectral_index()</code> · <code>composite()</code></td><td>functions</td><td>Index math and band composites</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="api-model">The mental model</h3>
+  <div class="api-flow">
+    <div class="api-step"><div class="as-n">STEP 1</div><div class="as-k">Map(mode=…)</div><div class="as-d">Create a 2D or 3D scene.</div></div>
+    <div class="api-step"><div class="as-n">STEP 2</div><div class="as-k">.add_layer() · .add_raster() · .add_terrain()</div><div class="as-d">Stack typed layers.</div></div>
+    <div class="api-step"><div class="as-n">STEP 3</div><div class="as-k">.calculate_index() · .fit()</div><div class="as-d">Analyze and frame.</div></div>
+    <div class="api-step"><div class="as-n">STEP 4</div><div class="as-k">.save() · .export_3d()</div><div class="as-d">Interactive map, image, or model.</div></div>
+  </div>
+  <div class="alert alert-ok"><strong>Everything chains.</strong> <code class="ci">add_layer()</code> returns the layer (so you can <code class="ci">.style()</code> / <code class="ci">.buffer()</code> it), and the 3D <code class="ci">add_*</code> / <code class="ci">fit()</code> return the Map — so <code class="ci">pgs.Map().add_terrain("dem.tif").export_3d("t.glb")</code> is a complete program.</p></div>
 
   <h3 id="api-map">Map</h3>
   <div class="api-class">
     <div class="api-class-header"><span class="api-class-name">Map</span><span class="api-class-type">class</span></div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">Map</span>(<span class="param">center</span>=(0.0, 0.0), <span class="param">zoom</span>=2, <span class="param">basemap</span>="carto-light")</div>
-      <div class="api-desc">Create a 2D web map. Raises <code class="ci">ValueError</code> for an unknown basemap.</div>
+      <div class="api-sig"><span class="fn">Map</span>(*, <span class="param">view</span>=None, <span class="param">mode</span>="2d", <span class="param">basemap</span>=&lt;carto positron&gt;, <span class="param">title</span>="PyGeoSpace map")</div>
+      <div class="api-desc">Create a map. <code class="ci">mode="2d"</code> builds a deck.gl scene; <code class="ci">mode="3d"</code> builds a PyVista scene.</div>
       <div class="api-params">
-        <div class="api-param-row"><div class="api-param-name">center</div><div class="api-param-type">tuple[float,float]</div><div class="api-param-desc">(longitude, latitude) of the initial view. Longitude first.</div></div>
-        <div class="api-param-row"><div class="api-param-name">zoom</div><div class="api-param-type">float</div><div class="api-param-desc">Initial zoom. 0 = whole world, ~18 = building scale.</div></div>
-        <div class="api-param-row"><div class="api-param-name">basemap</div><div class="api-param-type">str</div><div class="api-param-desc"><code class="ci">"carto-light"</code>, <code class="ci">"carto-dark"</code>, or <code class="ci">"osm"</code>.</div></div>
+        <div class="api-param-row"><div class="api-param-name">mode</div><div class="api-param-type">str</div><div class="api-param-desc"><code class="ci">"2d"</code> (default) or <code class="ci">"3d"</code>.</div></div>
+        <div class="api-param-row"><div class="api-param-name">basemap</div><div class="api-param-type">str</div><div class="api-param-desc">Tile URL template or style URL for the 2D base layer.</div></div>
+        <div class="api-param-row"><div class="api-param-name">title</div><div class="api-param-type">str</div><div class="api-param-desc">Shown in the exported page's title bar.</div></div>
       </div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">add_layer</span>(<span class="param">layer</span>: Layer) → <span class="ret">Map</span></div>
-      <div class="api-desc">Add a layer to the top of the stack. Returns <code class="ci">self</code> for chaining. Raises <code class="ci">ValueError</code> on a duplicate layer name.</div>
+      <div class="api-sig"><span class="fn">add_layer</span>(<span class="param">layer</span>, **kwargs) → <span class="ret">Layer</span></div>
+      <div class="api-desc">Add a GeoDataFrame, GeoSeries, path, or Layer. Returns the layer for chaining (<code class="ci">.style(...)</code>, <code class="ci">.buffer(metres)</code>).</div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">layers</span> → <span class="ret">list[Layer]</span> <span style="color:var(--text-muted)">(property)</span></div>
-      <div class="api-desc">A copy of the current layer stack.</div>
+      <div class="api-sig"><span class="fn">add_basemap</span>(<span class="param">url</span>=&lt;osm&gt;, *, <span class="param">opacity</span>=1.0, <span class="param">name</span>="basemap") → <span class="ret">Layer</span></div>
+      <div class="api-desc">Add an XYZ raster tile basemap.</div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">to_dict</span>() → <span class="ret">dict</span></div>
-      <div class="api-desc">Serialize the full map state (center, zoom, resolved basemap URL, layer specs) to a JSON-able dict.</div>
+      <div class="api-sig"><span class="fn">add_raster</span>(<span class="param">source</span>, *, <span class="param">name</span>=None, <span class="param">opacity</span>=1.0, <span class="param">bands</span>=None, <span class="param">cmap</span>="viridis") → <span class="ret">RasterLayer</span></div>
+      <div class="api-desc">Drape a georeferenced raster (path, array, or RasterLayer). <code class="ci">bands=[r,g,b]</code> for a composite; <code class="ci">cmap</code> for single-band.</div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">to_html</span>() → <span class="ret">str</span></div>
-      <div class="api-desc">Render the map to a standalone HTML string (MapLibre GL).</div>
+      <div class="api-sig"><span class="fn">add_heatmap</span>(<span class="param">points</span>, *, <span class="param">radius</span>=30, <span class="param">intensity</span>=1.0, <span class="param">name</span>="heatmap") → <span class="ret">Layer</span></div>
+      <div class="api-desc">Kernel-density heatmap from a list of (lon, lat) points.</div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">save</span>(<span class="param">path</span>: str | Path) → <span class="ret">Path</span></div>
-      <div class="api-desc">Write the map to an HTML file and return the resolved path.</div>
+      <div class="api-sig"><span class="fn">add_text_labels</span>(<span class="param">points</span>, <span class="param">texts</span>, *, <span class="param">font_size</span>=12, <span class="param">text_color</span>=(0,0,0), <span class="param">background_color</span>=None) → <span class="ret">Layer</span></div>
+      <div class="api-desc">Place text labels at the given coordinates.</div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="param">Map.BASEMAPS</span> → <span class="ret">dict[str, str]</span> <span style="color:var(--text-muted)">(class attribute)</span></div>
-      <div class="api-desc">Mapping of basemap keys to XYZ tile URL templates.</div>
+      <div class="api-sig"><span class="fn">calculate_index</span>(<span class="param">index</span>, **<span class="param">band_map</span>) → <span class="ret">RasterLayer</span></div>
+      <div class="api-desc">Compute a spectral index from the map's most recent raster, e.g. <code class="ci">calculate_index("ndvi", band_nir=4, band_red=3)</code>.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">add_surface</span>(<span class="param">x</span>, <span class="param">y</span>, <span class="param">z</span>, *, <span class="param">cmap</span>="viridis", <span class="param">exaggeration</span>=1.0) → <span class="ret">Map</span> <span style="color:var(--text-muted)">(3D)</span></div>
+      <div class="api-desc">Build a terrain surface from a meshgrid.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">add_terrain</span>(<span class="param">source</span>, *, <span class="param">exaggeration</span>=1.0, <span class="param">cmap</span>="gist_earth", <span class="param">band</span>=1) → <span class="ret">Map</span> <span style="color:var(--text-muted)">(3D)</span></div>
+      <div class="api-desc">Build terrain from a DEM raster.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">add_pointcloud_3d</span>(<span class="param">source</span>, *, <span class="param">point_size</span>=2.0, <span class="param">color</span>=None) → <span class="ret">Map</span> <span style="color:var(--text-muted)">(3D)</span></div>
+      <div class="api-desc">Add a 3D point cloud (XYZ list or LAS/LAZ).</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">add_extruded</span>(<span class="param">source</span>, <span class="param">height_col</span>, *, <span class="param">factor</span>=1.0, <span class="param">color</span>="lightgray") → <span class="ret">Map</span> <span style="color:var(--text-muted)">(3D)</span></div>
+      <div class="api-desc">Extrude polygons to 3D by an attribute column (e.g. building heights).</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">fit</span>() → <span class="ret">Map</span></div>
+      <div class="api-desc">Frame the view to the combined extent of all vector and raster layers.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">to_html</span>(*, <span class="param">rich</span>=True) → <span class="ret">str</span> &nbsp;·&nbsp; <span class="fn">save</span>(<span class="param">path</span>, *, <span class="param">dpi</span>=150, <span class="param">rich</span>=True) → <span class="ret">str</span></div>
+      <div class="api-desc">Export. <code class="ci">.html</code> → interactive map (set <code class="ci">rich=False</code> for the plain deck.gl page); <code class="ci">.png</code>/<code class="ci">.pdf</code> → static render of rasters + vectors.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">render_3d</span>(<span class="param">path</span>, *, <span class="param">camera</span>=None) → <span class="ret">str</span> &nbsp;·&nbsp; <span class="fn">export_3d</span>(<span class="param">path</span>, *, <span class="param">camera</span>=None) → <span class="ret">str</span> <span style="color:var(--text-muted)">(3D)</span></div>
+      <div class="api-desc"><code class="ci">render_3d</code> → static PNG; <code class="ci">export_3d</code> → interactive HTML or a model file (<code class="ci">.gltf/.glb/.stl/.ply/.obj/.vtk</code>) inferred from the extension.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">remove_layer</span>(<span class="param">name</span>) → <span class="ret">bool</span> &nbsp;·&nbsp; <span class="fn">to_deck</span>() → <span class="ret">pydeck.Deck</span></div>
+      <div class="api-desc">Remove a layer by name; or drop down to the underlying pydeck object.</div>
     </div>
   </div>
 
-  <h3 id="api-vectorlayer">VectorLayer</h3>
+  <h3 id="api-camera">Camera3D</h3>
   <div class="api-class">
-    <div class="api-class-header"><span class="api-class-name">VectorLayer</span><span class="api-class-type">dataclass</span></div>
+    <div class="api-class-header"><span class="api-class-name">Camera3D</span><span class="api-class-type">dataclass</span></div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">VectorLayer</span>(<span class="param">name</span>: str, <span class="param">visible</span>=True, <span class="param">geojson</span>={...}, <span class="param">style</span>={})</div>
-      <div class="api-desc">A styled vector layer backed by a GeoJSON FeatureCollection. The supplied <code class="ci">style</code> is merged over the defaults documented above.</div>
-      <div class="api-params">
-        <div class="api-param-row"><div class="api-param-name">name</div><div class="api-param-type">str</div><div class="api-param-desc">Layer identifier; must be unique within a Map.</div></div>
-        <div class="api-param-row"><div class="api-param-name">geojson</div><div class="api-param-type">dict</div><div class="api-param-desc">A GeoJSON FeatureCollection. Points, lines and polygons all supported.</div></div>
-        <div class="api-param-row"><div class="api-param-name">style</div><div class="api-param-type">dict</div><div class="api-param-desc">Style overrides (see Styling).</div></div>
-        <div class="api-param-row"><div class="api-param-name">visible</div><div class="api-param-type">bool</div><div class="api-param-desc">Whether the layer renders. Default True.</div></div>
-      </div>
+      <div class="api-sig"><span class="fn">Camera3D</span>(<span class="param">position</span>=(1,1,1), <span class="param">focal_point</span>=(0,0,0), <span class="param">view_up</span>=(0,0,1), <span class="param">up</span>=None)</div>
+      <div class="api-desc">A scriptable 3D camera. <code class="ci">up=</code> is an alias for <code class="ci">view_up</code>.</div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">feature_count</span> → <span class="ret">int</span> <span style="color:var(--text-muted)">(property)</span></div>
-      <div class="api-desc">Number of features in the layer.</div>
+      <div class="api-sig"><span class="fn">fly_to</span>(position, focal_point) &nbsp;·&nbsp; <span class="fn">orbit</span>(degrees) &nbsp;·&nbsp; <span class="fn">tilt</span>(degrees)</div>
+      <div class="api-desc">Move the camera; orbit around or tilt toward the focal point.</div>
     </div>
     <div class="api-method">
-      <div class="api-sig"><span class="fn">set_style</span>(**<span class="param">kwargs</span>) → <span class="ret">VectorLayer</span></div>
-      <div class="api-desc">Update style properties in place. Returns <code class="ci">self</code> for chaining.</div>
-    </div>
-    <div class="api-method">
-      <div class="api-sig"><span class="fn">filter</span>(<span class="param">predicate</span>) → <span class="ret">VectorLayer</span></div>
-      <div class="api-desc">Return a <em>new</em> layer with only the features whose properties satisfy <code class="ci">predicate(props)</code>. The original is untouched.</div>
-    </div>
-    <div class="api-method">
-      <div class="api-sig"><span class="fn">to_spec</span>() → <span class="ret">dict</span></div>
-      <div class="api-desc">Serialize to the renderer spec embedded in exported HTML.</div>
+      <div class="api-sig"><span class="fn">keyframe</span>(t, position, focal_point) &nbsp;·&nbsp; <span class="fn">save_path</span>() → <span class="ret">list</span></div>
+      <div class="api-desc">Define keyframes for a fly-through and read back the interpolated path.</div>
     </div>
   </div>
 
-  <h3 id="api-read">read()</h3>
-  <div class="api-class">
-    <div class="api-class-header"><span class="api-class-name">read</span><span class="api-class-type">function</span></div>
-    <div class="api-method">
-      <div class="api-sig"><span class="fn">read</span>(<span class="param">path</span>: str | Path, <span class="param">name</span>=None, **<span class="param">style</span>) → <span class="ret">VectorLayer</span></div>
-      <div class="api-desc">Read a vector dataset into a <code class="ci">VectorLayer</code>. <code class="ci">name</code> defaults to the file stem. Extra keyword args become style overrides. Raises <code class="ci">NotImplementedError</code> for formats needing GeoPandas when it is not installed, or for unsupported extensions.</div>
-    </div>
+  <h3 id="api-analytics">Analytics</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Module</th><th>Functions</th></tr></thead>
+      <tbody>
+        <tr><td><code>analytics.spatial</code></td><td><code>buffer</code> (true metres via UTM), <code>intersection</code>, <code>difference</code>, <code>dissolve</code></td></tr>
+        <tr><td><code>analytics.clustering</code></td><td><code>kmeans</code>, <code>dbscan</code>, <code>hexbin</code> (H3)</td></tr>
+        <tr><td><code>analytics.stats</code></td><td><code>classify</code>, <code>jenks</code>, <code>quantiles</code>, <code>equal_interval</code>, <code>choropleth</code></td></tr>
+        <tr><td><code>analytics.raster</code></td><td><code>ndvi</code>, <code>hillshade</code>, <code>reproject_raster</code>, <code>mosaic</code></td></tr>
+        <tr><td><code>analytics.spectral</code></td><td><code>spectral_index</code> (ndvi/ndwi/ndbi/savi/evi), <code>composite</code>, <code>slope</code></td></tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="code-block">
     <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">full_workflow.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <pre>import pygeospace as pgs
+from pygeospace.analytics.spectral import spectral_index, composite
 
-<span class="tc"># Read GeoJSON and style it</span>
-cities = pgs.read("cities.geojson", color="#e53e3e", radius=9)
+<span class="tc"># A 5-band stack: blue, green, red, nir, swir (RasterLayer)</span>
+stack = pgs.RasterLayer(array, transform=transform, crs="EPSG:32618")
 
-<span class="tc"># Derive a filtered layer (original is unchanged)</span>
-big = cities.filter(lambda p: p["population"] > 8_000_000)
-big.name = "megacities"
-big.set_style(color="#1da3d8", radius=14)
+<span class="tc"># Visualize the imagery itself — true color and false-color IR</span>
+m = pgs.Map(title="Sentinel-2")
+m.add_basemap()
+m.add_raster(stack, bands=[3, 2, 1], name="True color")
+m.fit().save("true_color.html")     <span class="tc"># interactive, with controls</span>
+m.save("true_color.png")            <span class="tc"># georeferenced image</span>
 
-<span class="tc"># Compose a map and export</span>
-m = pgs.Map(center=(0, 25), zoom=1.5, basemap="carto-light")
-m.add_layer(cities)
-m.add_layer(big)
-out = m.save("map.html")
-print(f"Wrote {out} — {cities.feature_count} cities, {big.feature_count} megacities")</pre>
+<span class="tc"># Spectral index (band order: red=3, nir=4)</span>
+ndvi = spectral_index(stack, "ndvi")
+pgs.Map().add_raster(ndvi, cmap="RdYlGn").save("ndvi.html")</pre>
   </div>
 </div>
 
@@ -565,56 +659,54 @@ print(f"Wrote {out} — {cities.feature_count} cities, {big.feature_count} megac
 <div class="doc-section alt" id="cli">
   <div class="sec-label">CLI</div>
   <h2 class="sec-title">Command-Line Reference</h2>
-  <p class="sec-sub">The <code class="ci">pygeospace</code> command wraps the same API for quick, scriptable map generation. Every command here is real; planned-but-unbuilt commands exit with a clear message instead of pretending to work.</p>
+  <p class="sec-sub">The <code class="ci">pygeospace</code> command wraps the library for scriptable output. Top-level commands: <code class="ci">visualize</code>, <code class="ci">info</code>, <code class="ci">3d</code>, <code class="ci">spectral</code>, <code class="ci">flow</code>, <code class="ci">export</code>, <code class="ci">export-gltf</code>, <code class="ci">serve</code>, <code class="ci">stream</code>.</p>
 
   <div class="code-block">
     <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">usage</span></div>
     <pre>pygeospace [OPTIONS] COMMAND [ARGS]
 
-Options:
-  --version   Show the version and exit.
-  --help      Show this message and exit.
-
 Commands:
-  visualize   Read a vector file and write an interactive HTML map.
-  info        Print summary information about a vector dataset.
-  version     Print the version.</pre>
+  visualize     Read a vector file and write an interactive HTML map.
+  info          Print summary information about a dataset.
+  3d terrain    Build a 3D terrain scene from a DEM.
+  3d pointcloud Render a 3D point cloud (LAS/LAZ).
+  spectral      Compute a spectral index (NDVI, NDWI, …) from a raster.
+  flow          Render an origin-destination flow / arc map.
+  export        Export a map to HTML / image.
+  export-gltf   Export a 3D scene to a glTF model.
+  serve         Serve a directory of outputs over HTTP.
+  stream        Connect a streaming (WebSocket/MQTT) source.</pre>
   </div>
 
   <h3 id="cli-visualize">visualize</h3>
   <p>Read a vector file and write a standalone interactive HTML map.</p>
   <div class="flag-table">
     <div class="flag-row hdr"><div class="flag-name" style="color:var(--text-muted)">Flag</div><div class="flag-type" style="color:var(--text-muted)">Type</div><div class="flag-desc" style="color:var(--text-muted)">Description</div></div>
-    <div class="flag-row"><div class="flag-name">PATH</div><div class="flag-type">arg</div><div class="flag-desc">Input vector file (GeoJSON, or any <code class="ci">[formats]</code> type). Required.</div></div>
+    <div class="flag-row"><div class="flag-name">PATH</div><div class="flag-type">arg</div><div class="flag-desc">Input vector file. Required.</div></div>
     <div class="flag-row"><div class="flag-name">-o, --output</div><div class="flag-type">path</div><div class="flag-desc">Output HTML file.<div class="flag-default">map.html</div></div></div>
-    <div class="flag-row"><div class="flag-name">--color</div><div class="flag-type">string</div><div class="flag-desc">Feature color (any CSS color).<div class="flag-default">#2b6cb0</div></div></div>
-    <div class="flag-row"><div class="flag-name">--radius</div><div class="flag-type">int</div><div class="flag-desc">Point radius in pixels.<div class="flag-default">6</div></div></div>
-    <div class="flag-row"><div class="flag-name">--basemap</div><div class="flag-type">choice</div><div class="flag-desc"><code class="ci">carto-light</code>, <code class="ci">carto-dark</code>, <code class="ci">osm</code>.<div class="flag-default">carto-light</div></div></div>
-    <div class="flag-row"><div class="flag-name">--zoom</div><div class="flag-type">float</div><div class="flag-desc">Initial zoom level.<div class="flag-default">2.0</div></div></div>
+    <div class="flag-row"><div class="flag-name">--basemap</div><div class="flag-type">string</div><div class="flag-desc">Basemap tile URL or key.</div></div>
   </div>
   <div class="code-block">
-    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">visualize examples</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
-    <pre><span class="tc"># Minimal</span>
-pygeospace visualize cities.geojson
-
-<span class="tc"># Styled, dark basemap, custom output</span>
-pygeospace visualize cities.geojson \
-  -o out/cities.html \
-  --color "#e53e3e" --radius 9 \
-  --basemap carto-dark --zoom 3</pre>
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">visualize</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>pygeospace visualize cities.geojson -o cities.html</pre>
   </div>
 
-  <h3 id="cli-info">info</h3>
-  <p>Print a quick JSON summary of a dataset — feature count, geometry types, and property keys.</p>
+  <h3 id="cli-3d">3d</h3>
+  <p>Build 3D scenes from the command line.</p>
   <div class="code-block">
-    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">info</span></div>
-    <pre>pygeospace info cities.geojson
-<span class="tc"># {</span>
-<span class="tc">#   "file": "cities.geojson",</span>
-<span class="tc">#   "features": 4,</span>
-<span class="tc">#   "geometry_types": ["Point"],</span>
-<span class="tc">#   "property_keys": ["city", "population"]</span>
-<span class="tc"># }</span></pre>
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">3d</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="tc"># Terrain from a DEM → interactive HTML + glTF</span>
+pygeospace 3d terrain dem.tif -o terrain.html --exaggeration 2.0
+
+<span class="tc"># Classified LIDAR point cloud</span>
+pygeospace 3d pointcloud lidar.laz -o cloud.html</pre>
+  </div>
+
+  <h3 id="cli-spectral">spectral</h3>
+  <p>Compute a spectral index from a multi-band raster.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">spectral</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>pygeospace spectral scene.tif --index ndvi -o ndvi.html</pre>
   </div>
 </div>
 
@@ -622,171 +714,228 @@ pygeospace visualize cities.geojson \
 <div class="doc-section" id="examples">
   <div class="sec-label">Examples</div>
   <h2 class="sec-title">Copy-paste recipes</h2>
-  <p class="sec-sub">Each example is self-contained and runs against the current release.</p>
+  <p class="sec-sub">Each example runs against the current release.</p>
 
-  <h3>A point map from inline data</h3>
+  <h3>A styled vector map with landmarks, buffers and a heatmap</h3>
   <div class="code-block">
-    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">cities.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">nyc.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <pre>import pygeospace as pgs
+import geopandas as gpd
+from shapely.geometry import Point
 
-cities = {
-    "type": "FeatureCollection",
-    "features": [
-        {"type": "Feature",
-         "geometry": {"type": "Point", "coordinates": [-0.13, 51.51]},
-         "properties": {"city": "London", "population": 8982000}},
-        {"type": "Feature",
-         "geometry": {"type": "Point", "coordinates": [-0.19, 5.60]},
-         "properties": {"city": "Accra", "population": 2388000}},
-        {"type": "Feature",
-         "geometry": {"type": "Point", "coordinates": [139.69, 35.69]},
-         "properties": {"city": "Tokyo", "population": 13960000}},
-    ],
-}
+landmarks = {"Times Square": (-73.9855, 40.7580),
+             "Central Park": (-73.9654, 40.7829)}
+gdf = gpd.GeoDataFrame({"name": list(landmarks)},
+        geometry=[Point(*c) for c in landmarks.values()],
+        crs="EPSG:4326")
 
-layer = pgs.VectorLayer(name="cities", geojson=cities,
-                        style={"color": "#e53e3e", "radius": 9})
-pgs.Map(center=(0, 25), zoom=1.5).add_layer(layer).save("cities.html")</pre>
+m = pgs.Map(title="NYC")
+m.add_basemap()
+m.add_layer(gdf, name="Landmarks").style(
+    get_fill_color=[255, 0, 0, 200], get_radius=120)
+m.add_layer(gdf, name="500 m buffer").buffer(500) \
+    .style(get_fill_color=[0, 255, 0, 80])      <span class="tc"># true metres</span>
+m.add_heatmap(list(landmarks.values()), name="Density")
+m.fit().save("nyc.html")</pre>
   </div>
 
-  <h3 id="example-filter">Filtering features into a second layer</h3>
+  <h3 id="example-imagery">Satellite imagery composites</h3>
   <div class="code-block">
-    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">filter.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">imagery.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <pre>import pygeospace as pgs
 
-cities = pgs.read("cities.geojson")
-mega = cities.filter(lambda p: p["population"] > 8_000_000)
-mega.name = "megacities"
-mega.set_style(color="#1da3d8", radius=14)
-
-m = pgs.Map(center=(0, 25), zoom=1.5)
-m.add_layer(cities)   <span class="tc"># all cities, default blue</span>
-m.add_layer(mega)     <span class="tc"># big ones, emphasized on top</span>
-m.save("filtered.html")</pre>
+<span class="tc"># stack: blue=1, green=2, red=3, nir=4, swir=5 (RasterLayer)</span>
+for key, bands in {"true_color": [3, 2, 1],
+                   "false_color_ir": [4, 3, 2],
+                   "agriculture": [5, 4, 3]}.items():
+    m = pgs.Map(title=key)
+    m.add_basemap()
+    m.add_raster(stack, bands=bands, opacity=1.0)
+    m.fit().save(f"{key}.html")   <span class="tc"># interactive</span>
+    m.save(f"{key}.png")          <span class="tc"># georeferenced image</span></pre>
   </div>
 
-  <h3 id="example-file">Reading a Shapefile or GeoPackage</h3>
-  <p>Requires <code class="ci">pip install "pygeospace[formats]"</code>.</p>
+  <h3 id="example-3d">3D terrain with a fly-through</h3>
   <div class="code-block">
-    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">from_file.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">terrain3d.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <pre>import pygeospace as pgs
 
-<span class="tc"># Any GeoPandas-readable vector format</span>
-regions = pgs.read("regions.gpkg", color="#059669", opacity=0.5)
-pgs.Map(center=(0, 25), zoom=4, basemap="osm") \
-   .add_layer(regions) \
-   .save("regions.html")</pre>
+m = pgs.Map(mode="3d")
+m.add_terrain("dem.tif", exaggeration=2.0, cmap="gist_earth")
+m.add_pointcloud_3d([(x, y, z)], point_size=14, color=[220, 30, 30])
+
+cam = pgs.Camera3D(position=(-2500, -2500, 4500),
+                   focal_point=(3200, 2800, 400), up=(0, 0, 1))
+m.render_3d("terrain.png", camera=cam)   <span class="tc"># static render</span>
+m.export_3d("terrain.html")              <span class="tc"># interactive 3D</span>
+m.export_3d("terrain.glb")               <span class="tc"># model for Blender/three.js</span></pre>
   </div>
 </div>
 
+<!-- GALLERY -->
+<div class="doc-section alt" id="gallery">
+  <div class="sec-label">Gallery</div>
+  <h2 class="sec-title">Output Gallery</h2>
+  <p class="sec-sub">All of these are real outputs from the current release's workflow (the NYC Sentinel-2 / Landsat-9 example). Drop the images beside this page — under <code class="ci">imagery/</code> and <code class="ci">gallery/</code> — and they'll appear here; until then each card shows its expected path.</p>
+
+  <div class="gallery-cat">✓ Available now — v0.6.1</div>
+  <div class="gallery-grid">
+    <div class="gcard">
+      <div class="gthumb">
+        <img src="imagery/nyc_map.png" alt="Interactive 2D vector map of New York City" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gfallback" style="display:none;"><span class="gf-ico">🗺️</span><span>imagery/nyc_map.png</span><span style="opacity:.6">place image here</span></div>
+        <span class="gtag now">v0.6 · live</span>
+      </div>
+      <div class="gmeta"><div class="gtitle">Interactive vector map</div><div class="gdesc">Landmarks, metre-accurate buffers, heatmap and labels on a deck.gl basemap, with the full control suite.</div><div class="gpath">output/2d/nyc_map.png</div></div>
+    </div>
+    <div class="gcard">
+      <div class="gthumb">
+        <img src="imagery/true_color.png" alt="True-color Sentinel-2 composite" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gfallback" style="display:none;"><span class="gf-ico">🛰️</span><span>imagery/true_color.png</span><span style="opacity:.6">place image here</span></div>
+        <span class="gtag now">v0.6 · live</span>
+      </div>
+      <div class="gmeta"><div class="gtitle">True-color composite</div><div class="gdesc">Natural-color RGB (bands 3-2-1) from a stacked multi-band raster, georeferenced.</div><div class="gpath">output/imagery/true_color.png</div></div>
+    </div>
+    <div class="gcard">
+      <div class="gthumb">
+        <img src="imagery/false_color_ir.png" alt="False-color infrared composite" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gfallback" style="display:none;"><span class="gf-ico">🔴</span><span>imagery/false_color_ir.png</span><span style="opacity:.6">place image here</span></div>
+        <span class="gtag now">v0.6 · live</span>
+      </div>
+      <div class="gmeta"><div class="gtitle">False-color (IR)</div><div class="gdesc">NIR-Red-Green (bands 4-3-2): vegetation glows red. A band-composite of the same stack.</div><div class="gpath">output/imagery/false_color_ir.png</div></div>
+    </div>
+    <div class="gcard">
+      <div class="gthumb">
+        <img src="gallery/ndvi.png" alt="NDVI vegetation index" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gfallback" style="display:none;"><span class="gf-ico">🌿</span><span>gallery/ndvi.png</span><span style="opacity:.6">place image here</span></div>
+        <span class="gtag now">v0.6 · live</span>
+      </div>
+      <div class="gmeta"><div class="gtitle">NDVI vegetation index</div><div class="gdesc">(NIR − Red) / (NIR + Red) rendered with a diverging colormap from the band stack.</div><div class="gpath">output/spectral/ndvi.html</div></div>
+    </div>
+    <div class="gcard">
+      <div class="gthumb">
+        <img src="gallery/agriculture.png" alt="Agriculture composite" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gfallback" style="display:none;"><span class="gf-ico">🌾</span><span>gallery/agriculture.png</span><span style="opacity:.6">place image here</span></div>
+        <span class="gtag now">v0.6 · live</span>
+      </div>
+      <div class="gmeta"><div class="gtitle">Agriculture composite</div><div class="gdesc">SWIR-NIR-Red (bands 5-4-3): crop / soil / water contrast.</div><div class="gpath">output/imagery/agriculture.png</div></div>
+    </div>
+    <div class="gcard">
+      <div class="gthumb">
+        <img src="gallery/terrain.png" alt="3D terrain render" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gfallback" style="display:none;"><span class="gf-ico">⛰️</span><span>gallery/terrain.png</span><span style="opacity:.6">place image here</span></div>
+        <span class="gtag now">v0.6 · live</span>
+      </div>
+      <div class="gmeta"><div class="gtitle">3D terrain render</div><div class="gdesc">A PyVista terrain scene rendered headlessly to PNG, with observation points and a scripted camera.</div><div class="gpath">output/3d/terrain.png</div></div>
+    </div>
+  </div>
+
+  <div class="alert alert-info"><strong>Tip:</strong> the spectral and 3D outputs are also exported as interactive <code class="ci">.html</code> — the gallery shows the still frames, but <code class="ci">output/spectral/ndvi.html</code> and <code class="ci">output/3d/terrain.html</code> are fully interactive.</div>
+</div>
+
 <!-- CURRENT SCOPE -->
-<div class="doc-section alt" id="scope">
+<div class="doc-section" id="scope">
   <div class="sec-label">Reference</div>
   <h2 class="sec-title">Current Scope — what's in, what's not</h2>
-  <p class="sec-sub">pygeospace is an early foundation. This section is deliberately explicit so you can tell, at a glance, whether it fits your use case today.</p>
+  <p class="sec-sub">PyGeoSpace 0.6.1 covers a lot of ground. This section is explicit so you can tell at a glance whether it fits your use case today.</p>
   <div class="sec-grid">
     <div class="sec-card">
-      <div class="sec-card-title">✅ In v0.1.0</div>
+      <div class="sec-card-title">✅ In v0.6.1</div>
       <ul class="sec-list">
-        <li>Read GeoJSON (stdlib) and GeoPandas formats (optional extra)</li>
-        <li>Styled vector layers: points, lines, polygons</li>
-        <li>Immutable <code class="ci">filter()</code> and chainable <code class="ci">set_style()</code></li>
-        <li>Three built-in basemaps</li>
-        <li>Standalone interactive HTML export (MapLibre GL)</li>
-        <li>Click popups + navigation controls in output</li>
-        <li>A small CLI: <code class="ci">visualize</code>, <code class="ci">info</code>, <code class="ci">version</code></li>
+        <li>2D maps: vector, raster, heatmap, text, basemaps</li>
+        <li>Rich interactive HTML (layer panel, basemap switch, scale bar, coords, legend, fullscreen)</li>
+        <li>Georeferenced raster display + static PNG/PDF of imagery</li>
+        <li>Spectral indices: NDVI, NDWI, NDBI, SAVI, EVI + band composites</li>
+        <li>True 3D via PyVista: terrain, surfaces, point clouds, extrusion</li>
+        <li>3D export: HTML, glTF, GLB, STL, PLY, OBJ, VTK</li>
+        <li>Scriptable <code class="ci">Camera3D</code> with keyframe fly-throughs</li>
+        <li>Analytics: metric buffers, overlays, K-means/DBSCAN/H3, choropleth</li>
+        <li>Streaming layer, plugin manager, REST API + web server, CLI</li>
       </ul>
     </div>
     <div class="sec-card">
       <div class="sec-card-title">○ Not built yet</div>
       <ul class="sec-list todo">
-        <li>Raster / COG layers and a tile server</li>
-        <li>Point-cloud and 3D / globe rendering</li>
-        <li>Real-time / streaming layers</li>
-        <li>On-the-fly analytics (NDVI, clustering, networks)</li>
-        <li>Choropleth classification + legends</li>
-        <li>WebGPU / vector-tile performance paths</li>
-        <li>Static image (PNG/PDF/SVG) export</li>
+        <li>Native COG tile server</li>
+        <li>Vector tiles / WebGPU performance paths for very large data</li>
+        <li>Globe / CesiumJS rendering</li>
+        <li>In-browser measure &amp; draw tools</li>
+        <li>Time-series animation UI</li>
       </ul>
     </div>
   </div>
-  <div class="alert alert-info"><strong>Design principle:</strong> unbuilt features fail loudly. Reading an unsupported format, for instance, raises <code class="ci">NotImplementedError</code> naming exactly what to install or which formats are supported — never a silent no-op.</div>
+  <div class="alert alert-info"><strong>Design principle:</strong> unbuilt paths fail loudly. Optional backends (rasterio, PyVista, H3) raise a clear <code class="ci">ImportError</code> naming the extra to install — never a silent no-op.</div>
 </div>
 
 <!-- ROADMAP -->
-<div class="doc-section" id="roadmap">
+<div class="doc-section alt" id="roadmap">
   <div class="sec-label">Roadmap</div>
   <h2 class="sec-title">Roadmap</h2>
-  <p class="sec-sub">A realistic path from this foundation. Phases are ordered by dependency and effort; dates are intentionally omitted until work is underway.</p>
+  <p class="sec-sub">Where the project has been and where it's going. Phases are ordered by dependency and effort.</p>
   <div class="roadmap-grid">
     <div class="rm-card done">
-      <div class="rm-version">v0.1.0</div>
-      <div class="rm-title">Foundation</div>
+      <div class="rm-version">v0.5.0</div>
+      <div class="rm-title">2D engine</div>
+      <div class="rm-date done">✓ Released</div>
+      <ul class="rm-items">
+        <li class="done">Vector / raster / point-cloud / stream layers</li>
+        <li class="done">Chainable Map API + analytics</li>
+        <li class="done">deck.gl rendering + CLI + REST API</li>
+      </ul>
+    </div>
+    <div class="rm-card done">
+      <div class="rm-version">v0.6.x</div>
+      <div class="rm-title">True 3D + imagery</div>
       <div class="rm-date done">✓ Current release</div>
       <ul class="rm-items">
-        <li class="done">Map / VectorLayer / read API</li>
-        <li class="done">GeoJSON + GeoPandas readers</li>
-        <li class="done">Standalone HTML export</li>
-        <li class="done">CLI (visualize / info / version)</li>
-        <li class="done">Test suite + packaging</li>
+        <li class="done">PyVista 3D terrain, point clouds, export</li>
+        <li class="done">Spectral indices + band composites</li>
+        <li class="done">Raster display + static image export</li>
+        <li class="done">Rich interactive HTML with controls</li>
       </ul>
     </div>
     <div class="rm-card planned">
-      <div class="rm-version">v0.2.0</div>
-      <div class="rm-title">Vector depth</div>
+      <div class="rm-version">v0.7.0+</div>
+      <div class="rm-title">Scale &amp; globe</div>
       <div class="rm-date planned">○ Planned</div>
       <ul class="rm-items">
-        <li class="todo">Choropleth: Jenks / quantile + legend</li>
-        <li class="todo">H3 clustering for dense points</li>
-        <li class="todo">On-the-fly reprojection (pyproj)</li>
-        <li class="todo">Line/polygon styling options</li>
-      </ul>
-    </div>
-    <div class="rm-card planned">
-      <div class="rm-version">v0.3.0+</div>
-      <div class="rm-title">Raster, scale &amp; 3D</div>
-      <div class="rm-date planned">○ Planned</div>
-      <ul class="rm-items">
-        <li class="todo">COG tiles + NDVI (rio-tiler)</li>
-        <li class="todo">Vector tiles + deck.gl for scale</li>
-        <li class="todo">Streaming (WebSocket) layer</li>
-        <li class="todo">3D / globe via CesiumJS</li>
+        <li class="todo">COG tile server + vector tiles</li>
+        <li class="todo">In-browser measure / draw tools</li>
+        <li class="todo">Time-series animation UI</li>
+        <li class="todo">Globe view (CesiumJS)</li>
       </ul>
     </div>
   </div>
-  <div class="alert alert-warn" style="margin-top:20px;"><strong>A note on scale claims:</strong> "billions of points" in a browser is achieved through tiling and aggregation, not by rendering every feature. Performance targets here will be stated as frames-per-second on named hardware against fixed datasets — measured, never asserted.</div>
+  <div class="alert alert-warn" style="margin-top:20px;"><strong>A note on scale claims:</strong> large-scale rendering is achieved through tiling and aggregation, not by drawing every feature. Performance targets will be stated as measured frames-per-second on named hardware against fixed datasets — measured, never asserted.</div>
 </div>
 
 <!-- CONTRIBUTING -->
-<div class="doc-section alt" id="contributing">
+<div class="doc-section" id="contributing">
   <div class="sec-label">Community</div>
   <h2 class="sec-title">Contributing</h2>
-  <p class="sec-sub">The codebase is small and approachable — a good place to add a feature end to end. The most useful next contributions are the v0.2.0 items above.</p>
+  <p class="sec-sub">The codebase is modular — core, analytics, render and io are cleanly separated. The roadmap items above are the most useful next contributions.</p>
   <div class="code-block">
     <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">dev setup</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
-    <pre><span class="tc"># Clone and install in editable mode with dev + formats extras</span>
+    <pre><span class="tc"># Editable install with all extras</span>
 git clone https://github.com/your-org/pygeospace
 cd pygeospace
-pip install -e ".[dev,formats]"
+pip install -e ".[dev,raster,3d]"
 
-<span class="tc"># Run the tests</span>
-pytest          <span class="tc"># or: PYTHONPATH=. python tests/test_core.py</span>
-
-<span class="tc"># Build distribution artifacts</span>
-python -m build
-twine check dist/*</pre>
+<span class="tc"># Run the tests + linter</span>
+pytest          <span class="tc"># 100 passing</span>
+ruff check .</pre>
   </div>
-  <div class="alert alert-info"><strong>Before you publish:</strong> <code class="ci">pygeospace</code> may be taken on PyPI. Pick a unique distribution name and verify it with <code class="ci">curl -s -o /dev/null -w "%{http_code}" https://pypi.org/pypi/&lt;name&gt;/json</code> (404 = available). Keep the package description truthful to what the code actually does.</div>
+  <div class="alert alert-info"><strong>Before you publish:</strong> verify the distribution name is free on PyPI with <code class="ci">curl -s -o /dev/null -w "%{http_code}" https://pypi.org/pypi/&lt;name&gt;/json</code> (404 = available). Keep the package description truthful to what the code actually does.</div>
 </div>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="f-logo">🗺️ <span>py</span>geospace</div>
-      <div class="f-desc">A small, honest geospatial visualization toolkit for Python. Read vector data, style it, and export an interactive map. MIT licensed.</div>
+      <div class="f-logo">🗺️ <span>Py</span>GeoSpace</div>
+      <div class="f-desc">A geospatial visualization toolkit for Python — 2D web maps and true 3D scenes, rasters, spectral analysis, and interactive export. MIT licensed.</div>
       <div class="f-badges">
-        <span class="pill">v0.1.0</span>
+        <span class="pill">v0.6.1</span>
         <span class="pill">MIT</span>
         <span class="pill">Python 3.10+</span>
       </div>
@@ -799,6 +948,7 @@ twine check dist/*</pre>
         <li><a href="#api">Python API</a></li>
         <li><a href="#cli">CLI</a></li>
         <li><a href="#examples">Examples</a></li>
+        <li><a href="#gallery">Gallery</a></li>
       </ul>
     </div>
     <div class="f-col">
@@ -819,8 +969,8 @@ twine check dist/*</pre>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 pygeospace contributors. Released under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</div>
-    <div class="footer-built">pygeospace v0.1.0 · docs</div>
+    <div class="footer-copy">© 2026 PyGeoSpace contributors. Released under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</div>
+    <div class="footer-built">PyGeoSpace v0.6.1 · docs</div>
   </div>
 </footer>
 
@@ -828,7 +978,7 @@ twine check dist/*</pre>
 </div>
 
 <script>
-/* ── Theme toggle ── */
+/* Theme toggle */
 const toggle = document.getElementById('themeToggle');
 const html = document.documentElement;
 toggle.addEventListener('click', () => {
@@ -837,11 +987,12 @@ toggle.addEventListener('click', () => {
   toggle.textContent = isDark ? '🌙' : '☀️';
 });
 
-/* ── Install tabs ── */
+/* Install tabs */
 const cmds = {
   core: 'pip install pygeospace',
-  formats: 'pip install "pygeospace[formats]"',
-  dev: 'pip install "pygeospace[dev,formats]"'
+  raster: 'pip install "pygeospace[raster]"',
+  threed: 'pip install "pygeospace[3d]"',
+  all: 'pip install "pygeospace[raster,3d,dev]"'
 };
 function setInstall(k, btn) {
   document.getElementById('install-cmd').textContent = cmds[k];
@@ -852,7 +1003,7 @@ function copyInstall() {
   navigator.clipboard.writeText(document.getElementById('install-cmd').textContent).catch(() => {});
 }
 
-/* ── Copy code blocks ── */
+/* Copy code blocks */
 function copyCode(btn) {
   const pre = btn.closest('.code-block').querySelector('pre');
   navigator.clipboard.writeText(pre.innerText).then(() => {
@@ -862,68 +1013,58 @@ function copyCode(btn) {
   }).catch(() => {});
 }
 
-/* ── Terminal demo (outputs mirror the real CLI) ── */
+/* Terminal demo (outputs mirror the real CLI) */
 const termOutputs = {
   version: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace --version</span>
-<span class="term-out">pygeospace, version 0.1.0</span>`,
-
+<span class="term-out">pygeospace, version 0.6.1</span>`,
   help: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace --help</span>
 
 <span class="term-out">Usage: pygeospace [OPTIONS] COMMAND [ARGS]...</span>
 
-<span class="term-out">  pygeospace — a small, honest geospatial visualization toolkit.</span>
-
-<span class="term-out">Options:</span>
-<span class="term-out">  --version   Show the version and exit.</span>
-<span class="term-out">  --help      Show this message and exit.</span>
-
 <span class="term-out">Commands:</span>
-<span class="term-info">  visualize</span>  <span class="term-out">Read a vector file and write an interactive HTML map.</span>
-<span class="term-info">  info</span>       <span class="term-out">Print summary information about a vector dataset.</span>
-<span class="term-info">  version</span>    <span class="term-out">Print the version.</span>`,
-
+<span class="term-info">  visualize</span>    <span class="term-out">Read a vector file and write an interactive HTML map.</span>
+<span class="term-info">  info</span>         <span class="term-out">Print summary information about a dataset.</span>
+<span class="term-info">  3d</span>           <span class="term-out">Build 3D scenes (terrain, pointcloud).</span>
+<span class="term-info">  spectral</span>     <span class="term-out">Compute a spectral index from a raster.</span>
+<span class="term-info">  flow</span>         <span class="term-out">Render an origin-destination flow map.</span>
+<span class="term-info">  export-gltf</span>  <span class="term-out">Export a 3D scene to glTF.</span>
+<span class="term-info">  serve</span>        <span class="term-out">Serve a directory of outputs over HTTP.</span>
+<span class="term-info">  stream</span>       <span class="term-out">Connect a streaming source.</span>`,
   info: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace info cities.geojson</span>
 <span class="term-out">{
   "file": "cities.geojson",
   "features": 4,
-  "geometry_types": [
-    "Point"
-  ],
-  "property_keys": [
-    "city",
-    "population"
-  ]
+  "geometry_types": ["Point"],
+  "crs": "EPSG:4326",
+  "property_keys": ["city", "population"]
 }</span>`,
-
-  visualize: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace visualize cities.geojson -o map.html --color "#e53e3e" --radius 9</span>
+  visualize: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace visualize cities.geojson -o map.html</span>
 <span class="term-ok">Wrote /home/you/map.html (4 features).</span>
 
-<span class="term-out"># Open map.html in any browser:</span>
-<span class="term-out">#   • pan / zoom / navigation controls</span>
-<span class="term-out">#   • click a point to see its properties</span>`,
-
-  visualize_missing: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace visualize points.las -o map.html</span>
-<span class="term-err">Error: No reader for '.las' yet. Supported now: ['.geojson', '.json'];</span>
-<span class="term-err">with GeoPandas installed: ['.fgb', '.gml', '.gpkg', '.gpx', '.kml', '.shp'].</span>
-
-<span class="term-out"># Point clouds (.las/.laz) are on the roadmap — see Roadmap → v0.3.0+.</span>`
+<span class="term-out"># Open map.html — layer panel, basemap switcher, scale bar,</span>
+<span class="term-out"># coordinate readout, fullscreen and legend included.</span>`,
+  threed: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace 3d terrain dem.tif -o terrain.html --exaggeration 2.0</span>
+<span class="term-info">Reading DEM dem.tif (rasterio) …</span>
+<span class="term-info">Building PyVista terrain mesh (offscreen GL) …</span>
+<span class="term-ok">Wrote terrain.html (interactive 3D) and terrain.glb.</span>`,
+  spectral: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace spectral scene.tif --index ndvi -o ndvi.html</span>
+<span class="term-info">Bands: blue=1 green=2 red=3 nir=4 swir=5</span>
+<span class="term-ok">NDVI range -0.42 .. 0.73  ·  wrote ndvi.html</span>`
 };
-
 const termInputs = {
   version: 'pygeospace --version',
   help: 'pygeospace --help',
   info: 'pygeospace info cities.geojson',
-  visualize: 'pygeospace visualize cities.geojson -o map.html --color "#e53e3e" --radius 9',
-  visualize_missing: 'pygeospace visualize points.las -o map.html'
+  visualize: 'pygeospace visualize cities.geojson -o map.html',
+  threed: 'pygeospace 3d terrain dem.tif -o terrain.html --exaggeration 2.0',
+  spectral: 'pygeospace spectral scene.tif --index ndvi -o ndvi.html'
 };
-
 function loadCmd() {
   const key = document.getElementById('termSelect').value;
   document.getElementById('termInput').value = termInputs[key];
   document.getElementById('termBody').innerHTML =
     `<span class="term-prompt">$ </span><span class="term-cmd">${termInputs[key].replace(/</g,'&lt;')}</span>\n<span class="term-out">Click ▶ Run to execute...</span>`;
 }
-
 function runCmd() {
   const key = document.getElementById('termSelect').value;
   const body = document.getElementById('termBody');
@@ -934,7 +1075,7 @@ function runCmd() {
   }, 280);
 }
 
-/* ── Active sidebar link on scroll ── */
+/* Active sidebar link on scroll */
 const sections = document.querySelectorAll('[id]');
 const links = document.querySelectorAll('.sb-link');
 const observer = new IntersectionObserver(entries => {
