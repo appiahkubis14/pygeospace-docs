@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>pygeospace — Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--accent:#1da3d8;--accent-dim:#dbeafe;--accent-hover:#1da3d8;--green:#059669;--green-dim:#d1fae5;--amber:#d97706;--amber-dim:#fef3c7;--red:#dc2626;--bg-page:#f8f9fa;--bg-surface:#ffffff;--bg-raised:#f1f3f5;--bg-code:#f6f8fa;--border:#e2e8f0;--border-strong:#cbd5e1;--text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;--text-code:#1e293b;--nav-bg:rgba(255,255,255,0.95);--nav-border:#e2e8f0;--sidebar-w:262px;--radius-sm:4px;--radius-md:6px;--radius-lg:10px;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
+[data-theme="dark"]{--accent:#60a5fa;--accent-dim:#0c2740;--accent-hover:#93c5fd;--green:#34d399;--green-dim:#063620;--amber:#fbbf24;--amber-dim:#291800;--bg-page:#0d1117;--bg-surface:#161b22;--bg-raised:#21262d;--bg-code:#1c2128;--border:#30363d;--border-strong:#484f58;--text-primary:#e6edf3;--text-secondary:#8b949e;--text-muted:#6e7681;--text-code:#cdd9e5;--nav-bg:rgba(22,27,34,0.97);--nav-border:#30363d;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg-page);color:var(--text-primary);line-height:1.65;transition:background .2s,color .2s;overflow-x:hidden;}
+a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--nav-bg);border-bottom:1px solid var(--nav-border);backdrop-filter:blur(14px);}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;gap:8px;}
+.nav-logo{font-size:15px;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:8px;white-space:nowrap;margin-right:16px;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-links a{font-size:13.5px;color:var(--text-secondary);padding:5px 11px;border-radius:var(--radius-md);transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--text-primary);background:var(--bg-raised);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.nav-gh{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary);padding:5px 10px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface);transition:all .15s;}
+.nav-gh:hover{color:var(--text-primary);border-color:var(--border-strong);text-decoration:none;}
+.nav-btn{font-size:13px;font-weight:500;padding:5px 14px;background:var(--accent);color:#fff;border-radius:var(--radius-md);transition:background .15s;}
+.nav-btn:hover{background:var(--accent-hover);text-decoration:none;}
+.theme-toggle{width:34px;height:34px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;}
+.theme-toggle:hover{border-color:var(--border-strong);background:var(--bg-raised);}
+.version-badge{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:10px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-dim);}
+.docs-layout{display:flex;padding-top:56px;min-height:100vh;}
+.sidebar{width:var(--sidebar-w);flex-shrink:0;position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;background:var(--bg-surface);border-right:1px solid var(--border);padding:20px 0;z-index:200;}
+.sidebar::-webkit-scrollbar{width:4px;}.sidebar::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px;}
+.sb-section{padding:0 16px;margin-bottom:20px;}
+.sb-title{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:6px;padding:0 4px;}
+.sb-link{display:block;font-size:13px;color:var(--text-secondary);padding:5px 8px;border-radius:var(--radius-sm);transition:all .12s;line-height:1.4;}
+.sb-link:hover{color:var(--text-primary);background:var(--bg-raised);text-decoration:none;}
+.sb-link.active{color:var(--accent);background:var(--accent-dim);font-weight:500;}
+.sb-link.sub{padding-left:18px;font-size:12.5px;}
+.docs-main{margin-left:var(--sidebar-w);flex:1;min-width:0;}
+.hero{padding:72px 64px 56px;background:var(--bg-surface);border-bottom:1px solid var(--border);}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);color:var(--text-secondary);background:var(--bg-raised);margin-bottom:20px;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.hero-title{font-size:clamp(28px,4vw,44px);font-weight:600;line-height:1.12;letter-spacing:-1.5px;margin-bottom:16px;}
+.hero-title strong{color:var(--accent);}
+.hero-sub{font-size:16px;color:var(--text-secondary);line-height:1.7;max-width:640px;margin-bottom:28px;}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;padding:9px 20px;border-radius:var(--radius-md);font-size:14px;font-weight:500;transition:background .15s;}
+.btn-primary:hover{background:var(--accent-hover);text-decoration:none;}
+.btn-outline{display:inline-flex;align-items:center;gap:7px;background:var(--bg-surface);color:var(--text-primary);padding:9px 20px;border-radius:var(--radius-md);font-size:14px;font-weight:500;border:1px solid var(--border);transition:all .15s;}
+.btn-outline:hover{border-color:var(--border-strong);background:var(--bg-raised);text-decoration:none;}
+.hero-stats{display:inline-flex;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-surface);flex-wrap:wrap;}
+.hstat{padding:12px 24px;text-align:center;border-right:1px solid var(--border);}
+.hstat:last-child{border-right:none;}
+.hstat-val{font-size:20px;font-weight:600;letter-spacing:-0.5px;line-height:1;}
+.hstat-label{font-size:11px;color:var(--text-muted);margin-top:3px;}
+.install-bar{background:var(--bg-page);border-bottom:1px solid var(--border);padding:12px 64px;}
+.install-inner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:860px;}
+.install-label{font-size:12px;color:var(--text-muted);white-space:nowrap;font-family:var(--mono);}
+.install-tabs{display:flex;gap:2px;}
+.itab{font-family:var(--mono);font-size:11.5px;padding:4px 10px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid transparent;color:var(--text-secondary);background:transparent;transition:all .12s;}
+.itab.active{background:var(--bg-surface);border-color:var(--border);color:var(--text-primary);}
+.install-box{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg-code);border:1px solid var(--border);border-radius:var(--radius-md);padding:7px 14px;min-width:240px;max-width:460px;}
+.install-cmd{font-family:var(--mono);font-size:13px;color:var(--green);flex:1;}
+.copy-btn{font-family:var(--mono);font-size:11px;color:var(--text-muted);background:none;border:1px solid var(--border);cursor:pointer;padding:2px 8px;border-radius:var(--radius-sm);transition:all .12s;}
+.copy-btn:hover{color:var(--text-primary);border-color:var(--border-strong);}
+.pill{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);color:var(--text-muted);white-space:nowrap;}
+.doc-section{padding:56px 64px;border-bottom:1px solid var(--border);}
+.doc-section.alt{background:var(--bg-surface);}
+.sec-label{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:10px;}
+.sec-title{font-size:clamp(20px,2.5vw,28px);font-weight:600;letter-spacing:-0.8px;margin-bottom:10px;line-height:1.2;}
+.sec-sub{font-size:14.5px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:32px;}
+h3{font-size:17px;font-weight:600;margin:32px 0 12px;letter-spacing:-0.3px;}h3:first-child{margin-top:0;}
+h4{font-size:14px;font-weight:600;margin:24px 0 8px;font-family:var(--mono);}
+p{font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;}
+p:last-child{margin-bottom:0;}
+.code-block{background:var(--bg-code);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:16px 0;}
+.code-header{background:var(--bg-raised);padding:9px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+.cb-dot{width:10px;height:10px;border-radius:50%;}
+.cb-fname{font-family:var(--mono);font-size:12px;color:var(--text-muted);flex:1;margin-left:6px;}
+.cb-copy{font-family:var(--mono);font-size:11px;color:var(--text-muted);background:none;border:1px solid var(--border);cursor:pointer;padding:2px 8px;border-radius:var(--radius-sm);transition:all .12s;}
+.cb-copy:hover{color:var(--text-primary);border-color:var(--border-strong);}
+.code-block pre{font-family:var(--mono);font-size:13px;line-height:1.85;padding:18px 20px;overflow-x:auto;color:var(--text-code);}
+.tc{color:#8c959f;font-style:italic;}
+.ci{font-family:var(--mono);font-size:12.5px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1px 6px;color:var(--text-code);}
+.terminal{background:#0d1117;border:1px solid #30363d;border-radius:var(--radius-lg);overflow:hidden;margin:16px 0;}
+.term-header{background:#161b22;border-bottom:1px solid #30363d;padding:9px 16px;display:flex;align-items:center;gap:6px;}
+.term-dot{width:10px;height:10px;border-radius:50%;}
+.term-title{font-family:var(--mono);font-size:12px;color:#8b949e;flex:1;margin-left:6px;}
+.term-body{padding:16px 20px;font-family:var(--mono);font-size:13px;line-height:1.9;color:#e6edf3;min-height:120px;max-height:420px;overflow-y:auto;white-space:pre-wrap;}
+.term-body::-webkit-scrollbar{width:4px;}.term-body::-webkit-scrollbar-thumb{background:#30363d;border-radius:4px;}
+.term-prompt{color:#7ee787;}.term-cmd{color:#e6edf3;}.term-out{color:#8b949e;}.term-ok{color:#3fb950;}.term-warn{color:#d29922;}.term-err{color:#f85149;}.term-info{color:#58a6ff;}
+.term-input-row{display:flex;align-items:center;gap:8px;padding:10px 20px;border-top:1px solid #21262d;}
+.term-input{flex:1;background:transparent;border:none;outline:none;font-family:var(--mono);font-size:13px;color:#e6edf3;}
+.term-run-btn{font-family:var(--mono);font-size:11px;background:#238636;color:#fff;border:none;padding:5px 14px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;}
+.term-run-btn:hover{background:#2ea043;}
+.term-select{background:#21262d;border:1px solid #30363d;color:#e6edf3;font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:var(--radius-sm);cursor:pointer;}
+.alert{border-radius:var(--radius-md);padding:12px 16px;margin:16px 0;font-size:13.5px;line-height:1.6;border-left:3px solid;}
+.alert-info{background:var(--accent-dim);border-color:var(--accent);}
+.alert-warn{background:var(--amber-dim);border-color:var(--amber);}
+.alert-ok{background:var(--green-dim);border-color:var(--green);}
+.alert strong{font-weight:600;}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-lg);margin:16px 0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead{background:var(--bg-raised);}
+th{text-align:left;padding:10px 14px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text-primary);}
+tr:last-child td{border-bottom:none;}tr:hover td{background:var(--bg-page);}
+td code{font-family:var(--mono);font-size:11.5px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1px 5px;}
+.steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+.step-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.step-card-header{background:var(--bg-raised);padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-title{font-size:13.5px;font-weight:500;}
+.step-code{padding:14px 16px;font-family:var(--mono);font-size:12.5px;color:var(--text-code);line-height:1.8;overflow-x:auto;white-space:pre;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-top:16px;}
+.feat-cell{background:var(--bg-surface);padding:22px;transition:background .15s;}
+.feat-cell:hover{background:var(--bg-raised);}
+.feat-icon{width:34px;height:34px;border-radius:var(--radius-md);background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px;}
+.feat-icon.green{background:var(--green-dim);}.feat-icon.amber{background:var(--amber-dim);}.feat-icon.neutral{background:var(--bg-raised);border:1px solid var(--border);}
+.feat-title{font-size:13.5px;font-weight:600;margin-bottom:7px;}
+.feat-body{font-size:12.5px;color:var(--text-secondary);line-height:1.6;}
+.format-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:16px 0;}
+.fmt-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;}
+.fmt-name{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);margin-bottom:4px;}
+.fmt-flag{font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:6px;}
+.fmt-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;}
+.flag-table{margin:16px 0;}
+.flag-row{display:grid;grid-template-columns:210px 90px 1fr;border-bottom:1px solid var(--border);padding:9px 0;align-items:start;}
+.flag-row.hdr{background:var(--bg-raised);border-radius:var(--radius-sm);padding:6px 0;}
+.flag-name{font-family:var(--mono);font-size:12px;color:var(--green);padding:0 12px;}
+.flag-type{font-family:var(--mono);font-size:11.5px;color:var(--amber);padding:0 8px;}
+.flag-desc{font-size:13px;color:var(--text-secondary);padding:0 12px;line-height:1.5;}
+.flag-default{display:inline-block;font-family:var(--mono);font-size:10.5px;background:var(--bg-raised);border:1px solid var(--border);border-radius:3px;padding:0 5px;color:var(--text-muted);margin-top:3px;}
+.api-class{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:16px 0;}
+.api-class-header{background:var(--bg-raised);padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.api-class-name{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--accent);}
+.api-class-type{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:10px;background:var(--accent-dim);color:var(--accent);}
+.api-method{border-bottom:1px solid var(--border);padding:16px 20px;}
+.api-method:last-child{border-bottom:none;}
+.api-sig{font-family:var(--mono);font-size:12.5px;color:var(--text-code);margin-bottom:8px;line-height:1.6;overflow-x:auto;}
+.api-sig .fn{color:var(--accent);font-weight:500;}
+.api-sig .param{color:var(--amber);}
+.api-sig .ret{color:var(--green);}
+.api-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;}
+.api-params{display:flex;flex-direction:column;gap:6px;}
+.api-param-row{display:grid;grid-template-columns:160px 110px 1fr;font-size:12.5px;gap:8px;padding:5px 0;border-top:1px solid var(--border);}
+.api-param-name{font-family:var(--mono);color:var(--amber);}
+.api-param-type{font-family:var(--mono);color:var(--text-muted);font-size:11px;}
+.api-param-desc{color:var(--text-secondary);}
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
+.rm-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;position:relative;overflow:hidden;}
+.rm-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.rm-card.done::before{background:var(--green);}
+.rm-card.progress::before{background:var(--accent);}
+.rm-card.planned::before{background:var(--border-strong);}
+.rm-version{font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:4px;}
+.rm-title{font-size:14px;font-weight:600;margin-bottom:4px;}
+.rm-date{font-family:var(--mono);font-size:11px;margin-bottom:14px;}
+.rm-date.done{color:var(--green);}
+.rm-date.progress{color:var(--accent);}
+.rm-date.planned{color:var(--text-muted);}
+.rm-items{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.rm-items li{font-size:12.5px;color:var(--text-secondary);padding-left:16px;position:relative;line-height:1.4;}
+.rm-items li::before{position:absolute;left:0;font-size:11px;}
+.rm-items li.done::before{content:"✓";color:var(--green);}
+.rm-items li.prog::before{content:"◐";color:var(--accent);}
+.rm-items li.todo::before{content:"○";color:var(--text-muted);}
+.sec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+.sec-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;}
+.sec-card-title{font-size:13.5px;font-weight:600;margin-bottom:10px;}
+.sec-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.sec-list li{font-size:13px;color:var(--text-secondary);line-height:1.5;padding-left:16px;position:relative;}
+.sec-list li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:600;}
+.sec-list.todo li::before{content:"○";color:var(--text-muted);}
+footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:40px 64px 24px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:32px;max-width:900px;}
+.f-logo{font-size:15px;font-weight:600;margin-bottom:8px;}.f-logo span{color:var(--accent);}
+.f-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:14px;}
+.f-badges{display:flex;flex-wrap:wrap;gap:6px;}
+.f-col-title{font-size:12px;font-weight:600;margin-bottom:10px;}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.f-col ul li a{font-size:13px;color:var(--text-secondary);transition:color .12s;}
+.f-col ul li a:hover{color:var(--text-primary);text-decoration:none;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px;max-width:900px;}
+.footer-copy{font-size:12px;color:var(--text-muted);}.footer-copy a{color:var(--accent);}
+.footer-built{font-family:var(--mono);font-size:11.5px;color:var(--text-muted);}
+@media(max-width:1024px){.sidebar{width:220px;}.docs-main{margin-left:220px;}.feat-grid{grid-template-columns:1fr 1fr;}.steps-grid{grid-template-columns:1fr;}.sec-grid{grid-template-columns:1fr;}.roadmap-grid{grid-template-columns:1fr;}}
+@media(max-width:768px){.sidebar{transform:translateX(-100%);width:260px;}.docs-main{margin-left:0;}.hero,.doc-section,.install-bar,footer{padding-left:24px;padding-right:24px;}.feat-grid{grid-template-columns:1fr;}.flag-row{grid-template-columns:1fr;gap:2px;}.roadmap-grid{grid-template-columns:1fr;}.api-param-row{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">🗺️ <span>py</span>geospace</div>
+    <div class="nav-links">
+      <a href="#quickstart">Quick Start</a>
+      <a href="#concepts">Concepts</a>
+      <a href="#api">Python API</a>
+      <a href="#cli">CLI</a>
+      <a href="#examples">Examples</a>
+      <a href="#roadmap">Roadmap</a>
+    </div>
+    <div class="nav-right">
+      <span class="version-badge">v0.1.0</span>
+      <a href="https://github.com/your-org/pygeospace" class="nav-gh" target="_blank">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34C3.73 14.36 3.26 12.9 3.26 12.9c-.36-.92-.88-1.16-.88-1.16-.72-.49.05-.48.05-.48.8.06 1.22.82 1.22.82.71 1.22 1.86.87 2.31.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.67 7.67 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>
+        GitHub
+      </a>
+      <a href="#quickstart" class="nav-btn">Get Started →</a>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<div class="docs-layout">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-section">
+    <div class="sb-title">Getting Started</div>
+    <a href="#overview" class="sb-link active">Overview</a>
+    <a href="#install" class="sb-link">Installation</a>
+    <a href="#quickstart" class="sb-link">Quick Start</a>
+    <a href="#demo" class="sb-link">Interactive Demo</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-title">Core Concepts</div>
+    <a href="#concepts" class="sb-link">The Map</a>
+    <a href="#concept-layers" class="sb-link">Layers</a>
+    <a href="#concept-read" class="sb-link">Reading Data</a>
+    <a href="#concept-style" class="sb-link">Styling</a>
+    <a href="#concept-basemaps" class="sb-link">Basemaps</a>
+    <a href="#concept-export" class="sb-link">HTML Export</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-title">Python API</div>
+    <a href="#api" class="sb-link">Overview</a>
+    <a href="#api-map" class="sb-link sub">Map</a>
+    <a href="#api-vectorlayer" class="sb-link sub">VectorLayer</a>
+    <a href="#api-read" class="sb-link sub">read()</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-title">CLI</div>
+    <a href="#cli" class="sb-link">Overview</a>
+    <a href="#cli-visualize" class="sb-link sub">visualize</a>
+    <a href="#cli-info" class="sb-link sub">info</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-title">Examples</div>
+    <a href="#examples" class="sb-link">Cities map</a>
+    <a href="#example-filter" class="sb-link">Filtering features</a>
+    <a href="#example-file" class="sb-link">From a file</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-title">Reference</div>
+    <a href="#scope" class="sb-link">Current Scope</a>
+    <a href="#roadmap" class="sb-link">Roadmap</a>
+    <a href="#contributing" class="sb-link">Contributing</a>
+  </div>
+</aside>
+
+<main class="docs-main">
+
+<!-- HERO -->
+<div class="hero" id="overview">
+  <div class="badge"><span class="badge-dot"></span>v0.1.0 · Foundation release · honest scope</div>
+  <h1 class="hero-title"><strong>pygeospace</strong> Documentation</h1>
+  <p class="hero-sub">A small, dependency-light geospatial visualization toolkit for Python. Read GeoJSON, attach styled vector layers to a map, and export a standalone interactive HTML map you can open in any browser — no build step, no server.</p>
+  <div class="hero-actions">
+    <a href="#quickstart" class="btn-primary">Quick Start →</a>
+    <a href="#api" class="btn-outline">Python API</a>
+    <a href="#cli" class="btn-outline">CLI Reference</a>
+    <a href="https://github.com/your-org/pygeospace" class="btn-outline" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34C3.73 14.36 3.26 12.9 3.26 12.9c-.36-.92-.88-1.16-.88-1.16-.72-.49.05-.48.05-.48.8.06 1.22.82 1.22.82.71 1.22 1.86.87 2.31.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.67 7.67 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>
+      GitHub
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">2</div><div class="hstat-label">Input formats*</div></div>
+    <div class="hstat"><div class="hstat-val">3</div><div class="hstat-label">Built-in basemaps</div></div>
+    <div class="hstat"><div class="hstat-val">1</div><div class="hstat-label">Core dependency</div></div>
+    <div class="hstat"><div class="hstat-val">5</div><div class="hstat-label">Tests passing</div></div>
+  </div>
+  <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">*GeoJSON with zero extra deps; Shapefile / GeoPackage / KML / GPX via the optional <code class="ci">[formats]</code> extra (GeoPandas).</p>
+</div>
+
+<!-- INSTALL BAR -->
+<div class="install-bar" id="install">
+  <div class="install-inner">
+    <span class="install-label">$ install</span>
+    <div class="install-tabs">
+      <button class="itab active" onclick="setInstall('core',this)">core</button>
+      <button class="itab" onclick="setInstall('formats',this)">+formats</button>
+      <button class="itab" onclick="setInstall('dev',this)">dev</button>
+    </div>
+    <div class="install-box">
+      <span class="install-cmd" id="install-cmd">pip install pygeospace</span>
+      <button class="copy-btn" onclick="copyInstall()">copy</button>
+    </div>
+    <span class="pill">MIT License</span>
+    <span class="pill">Python 3.10+</span>
+  </div>
+</div>
+
+<!-- QUICK START -->
+<div class="doc-section" id="quickstart">
+  <div class="sec-label">Getting Started</div>
+  <h2 class="sec-title">Up and running in 2 minutes</h2>
+  <p class="sec-sub">The core install has a single dependency (Click, for the CLI) and reads GeoJSON out of the box. Build a map in a few lines of Python, or straight from the command line.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-card-header"><div class="step-num">1</div><div class="step-title">Install</div></div>
+      <div class="step-code"><span class="tc"># Core — GeoJSON + HTML export</span>
+pip install pygeospace
+
+<span class="tc"># + Shapefile / GeoPackage / KML / GPX</span>
+pip install "pygeospace[formats]"</div>
+    </div>
+    <div class="step-card">
+      <div class="step-card-header"><div class="step-num">2</div><div class="step-title">Verify</div></div>
+      <div class="step-code">pygeospace --version
+<span class="tc"># → pygeospace, version 0.1.0</span>
+
+pygeospace --help
+<span class="tc"># lists: visualize, info, version</span></div>
+    </div>
+    <div class="step-card">
+      <div class="step-card-header"><div class="step-num">3</div><div class="step-title">Build a map (Python)</div></div>
+      <div class="step-code">import pygeospace as pgs
+
+layer = pgs.read("cities.geojson",
+                 color="#e53e3e", radius=9)
+m = pgs.Map(center=(0, 25), zoom=2,
+            basemap="carto-light")
+m.add_layer(layer)
+m.save("map.html")</div>
+    </div>
+    <div class="step-card">
+      <div class="step-card-header"><div class="step-num">4</div><div class="step-title">…or from the CLI</div></div>
+      <div class="step-code">pygeospace visualize cities.geojson \
+  --output map.html \
+  --color "#e53e3e" \
+  --radius 9 \
+  --basemap carto-light
+<span class="tc"># Wrote map.html (N features).</span></div>
+    </div>
+  </div>
+
+  <div class="alert alert-info"><strong>What you get:</strong> <code class="ci">map.html</code> is fully standalone — open it in any browser for a pan / zoom / click map. MapLibre GL is loaded from a CDN at view time; there is no server and no build step.</div>
+
+  <h3 id="demo">Interactive demo — try the CLI</h3>
+  <p>Pick a command and click Run to see the output it produces:</p>
+  <div class="terminal">
+    <div class="term-header">
+      <div class="term-dot" style="background:#ff5f56"></div>
+      <div class="term-dot" style="background:#ffbd2e"></div>
+      <div class="term-dot" style="background:#27c93f"></div>
+      <span class="term-title">pygeospace — interactive demo</span>
+      <select class="term-select" id="termSelect" onchange="loadCmd()">
+        <option value="version">pygeospace --version</option>
+        <option value="help">pygeospace --help</option>
+        <option value="info">pygeospace info</option>
+        <option value="visualize">pygeospace visualize</option>
+        <option value="visualize_missing">visualize — unsupported format</option>
+      </select>
+    </div>
+    <div class="term-body" id="termBody"><span class="term-prompt">$ </span><span class="term-cmd">pygeospace --version</span>
+<span class="term-out">Select a command above and click ▶ Run</span></div>
+    <div class="term-input-row">
+      <span class="term-prompt">$ </span>
+      <input class="term-input" id="termInput" value="pygeospace --version" readonly/>
+      <button class="term-run-btn" onclick="runCmd()">▶ Run</button>
+    </div>
+  </div>
+</div>
+
+<!-- CORE CONCEPTS -->
+<div class="doc-section alt" id="concepts">
+  <div class="sec-label">Core Concepts</div>
+  <h2 class="sec-title">How pygeospace fits together</h2>
+  <p class="sec-sub">Three objects do the work: a <code class="ci">Map</code> holds a view and a stack of layers, a <code class="ci">VectorLayer</code> wraps styled GeoJSON, and <code class="ci">read()</code> loads data into a layer. The map serializes itself to a self-contained HTML file.</p>
+
+  <div class="feat-grid">
+    <div class="feat-cell">
+      <div class="feat-icon">🗺️</div>
+      <div class="feat-title">Map</div>
+      <div class="feat-body">A view state (center, zoom, basemap) plus an ordered list of layers. Knows how to serialize to a dict and render to standalone HTML.</div>
+    </div>
+    <div class="feat-cell">
+      <div class="feat-icon">📍</div>
+      <div class="feat-title">VectorLayer</div>
+      <div class="feat-body">Wraps a GeoJSON FeatureCollection with a small style dict. Points, lines and polygons each pick the right draw type automatically.</div>
+    </div>
+    <div class="feat-cell">
+      <div class="feat-icon green">📥</div>
+      <div class="feat-title">read()</div>
+      <div class="feat-body">Loads a file into a VectorLayer. GeoJSON needs nothing extra; other vector formats route through GeoPandas when installed.</div>
+    </div>
+  </div>
+
+  <h3 id="concept-layers">Layers</h3>
+  <p><code class="ci">Layer</code> is the abstract base. <code class="ci">VectorLayer</code> is the implemented subclass today. Raster, point-cloud and streaming layers are on the roadmap and are intentionally not shipped yet — calls into those paths raise a clear error rather than silently doing nothing.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Layer</th><th>Status</th><th>Backed by</th></tr></thead>
+      <tbody>
+        <tr><td><code>VectorLayer</code></td><td><span style="color:var(--green)">✓ Implemented</span></td><td>GeoJSON FeatureCollection</td></tr>
+        <tr><td><code>RasterLayer</code></td><td><span style="color:var(--text-muted)">○ Planned</span></td><td>COG via tile server (roadmap)</td></tr>
+        <tr><td><code>PointCloudLayer</code></td><td><span style="color:var(--text-muted)">○ Planned</span></td><td>LAS/LAZ, 3D Tiles (roadmap)</td></tr>
+        <tr><td><code>StreamLayer</code></td><td><span style="color:var(--text-muted)">○ Planned</span></td><td>WebSocket source (roadmap)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="concept-read">Reading data</h3>
+  <p><code class="ci">read()</code> auto-detects by extension. GeoJSON is parsed with the standard library. The formats below require the optional <code class="ci">[formats]</code> extra (GeoPandas); without it, <code class="ci">read()</code> raises <code class="ci">NotImplementedError</code> with an install hint instead of failing obscurely.</p>
+  <div class="format-grid">
+    <div class="fmt-card"><div class="fmt-name">.geojson / .json</div><div class="fmt-flag">core · no deps</div><div class="fmt-desc">Parsed directly. A single Feature is wrapped into a FeatureCollection.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.shp</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">Shapefile via GeoPandas / Fiona.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.gpkg</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">GeoPackage via GeoPandas.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.kml / .gpx</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">KML and GPX tracks via GeoPandas.</div></div>
+    <div class="fmt-card"><div class="fmt-name">.fgb / .gml</div><div class="fmt-flag">[formats]</div><div class="fmt-desc">FlatGeobuf and GML via GeoPandas.</div></div>
+  </div>
+
+  <h3 id="concept-style">Styling</h3>
+  <p>Every <code class="ci">VectorLayer</code> carries a style dict merged over sensible defaults. Pass overrides to <code class="ci">read()</code> / <code class="ci">VectorLayer(...)</code>, or call <code class="ci">set_style(**kwargs)</code>. Colors are plain CSS strings.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Key</th><th>Default</th><th>Applies to</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>color</code></td><td><code>#2b6cb0</code></td><td>all</td><td>Fill / line / circle color.</td></tr>
+        <tr><td><code>opacity</code></td><td><code>0.8</code></td><td>all</td><td>Layer opacity, 0–1.</td></tr>
+        <tr><td><code>radius</code></td><td><code>6</code></td><td>points</td><td>Circle radius in pixels.</td></tr>
+        <tr><td><code>stroke_color</code></td><td><code>#1a365d</code></td><td>points / polygons</td><td>Outline color.</td></tr>
+        <tr><td><code>stroke_width</code></td><td><code>1</code></td><td>all</td><td>Outline / line width in pixels.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="concept-basemaps">Basemaps</h3>
+  <p>Three raster basemaps ship built in. Pass one to <code class="ci">Map(basemap=...)</code>. (Each pulls standard XYZ tiles; attribution is included in the exported map.)</p>
+  <div class="format-grid">
+    <div class="fmt-card"><div class="fmt-name">carto-light</div><div class="fmt-flag">default</div><div class="fmt-desc">CARTO Positron — clean, light, good under colorful data.</div></div>
+    <div class="fmt-card"><div class="fmt-name">carto-dark</div><div class="fmt-flag">dark</div><div class="fmt-desc">CARTO Dark Matter — high-contrast dark canvas.</div></div>
+    <div class="fmt-card"><div class="fmt-name">osm</div><div class="fmt-flag">detailed</div><div class="fmt-desc">OpenStreetMap standard — full streets and labels.</div></div>
+  </div>
+
+  <h3 id="concept-export">HTML export</h3>
+  <p><code class="ci">to_html()</code> returns the map as an HTML string; <code class="ci">save(path)</code> writes it to disk and returns the resolved path. The output embeds your data as GeoJSON and wires up MapLibre GL: navigation controls, hover cursors, and click-to-inspect popups showing each feature's properties.</p>
+  <div class="alert alert-warn"><strong>No browser storage:</strong> the exported page keeps all state in memory — it never uses localStorage or a backend. Drop it on static hosting (GitHub Pages, S3) and it just works.</div>
+</div>
+
+<!-- PYTHON API -->
+<div class="doc-section" id="api">
+  <div class="sec-label">Python API</div>
+  <h2 class="sec-title">API Reference</h2>
+  <p class="sec-sub">The public surface is deliberately small: <code class="ci">Map</code>, <code class="ci">VectorLayer</code> (and its base <code class="ci">Layer</code>), and <code class="ci">read</code>. Everything is importable from the top-level package.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">imports</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>import pygeospace as pgs
+from pygeospace import Map, VectorLayer, Layer, read</pre>
+  </div>
+
+  <h3 id="api-map">Map</h3>
+  <div class="api-class">
+    <div class="api-class-header"><span class="api-class-name">Map</span><span class="api-class-type">class</span></div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">Map</span>(<span class="param">center</span>=(0.0, 0.0), <span class="param">zoom</span>=2, <span class="param">basemap</span>="carto-light")</div>
+      <div class="api-desc">Create a 2D web map. Raises <code class="ci">ValueError</code> for an unknown basemap.</div>
+      <div class="api-params">
+        <div class="api-param-row"><div class="api-param-name">center</div><div class="api-param-type">tuple[float,float]</div><div class="api-param-desc">(longitude, latitude) of the initial view. Longitude first.</div></div>
+        <div class="api-param-row"><div class="api-param-name">zoom</div><div class="api-param-type">float</div><div class="api-param-desc">Initial zoom. 0 = whole world, ~18 = building scale.</div></div>
+        <div class="api-param-row"><div class="api-param-name">basemap</div><div class="api-param-type">str</div><div class="api-param-desc"><code class="ci">"carto-light"</code>, <code class="ci">"carto-dark"</code>, or <code class="ci">"osm"</code>.</div></div>
+      </div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">add_layer</span>(<span class="param">layer</span>: Layer) → <span class="ret">Map</span></div>
+      <div class="api-desc">Add a layer to the top of the stack. Returns <code class="ci">self</code> for chaining. Raises <code class="ci">ValueError</code> on a duplicate layer name.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">layers</span> → <span class="ret">list[Layer]</span> <span style="color:var(--text-muted)">(property)</span></div>
+      <div class="api-desc">A copy of the current layer stack.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">to_dict</span>() → <span class="ret">dict</span></div>
+      <div class="api-desc">Serialize the full map state (center, zoom, resolved basemap URL, layer specs) to a JSON-able dict.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">to_html</span>() → <span class="ret">str</span></div>
+      <div class="api-desc">Render the map to a standalone HTML string (MapLibre GL).</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">save</span>(<span class="param">path</span>: str | Path) → <span class="ret">Path</span></div>
+      <div class="api-desc">Write the map to an HTML file and return the resolved path.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="param">Map.BASEMAPS</span> → <span class="ret">dict[str, str]</span> <span style="color:var(--text-muted)">(class attribute)</span></div>
+      <div class="api-desc">Mapping of basemap keys to XYZ tile URL templates.</div>
+    </div>
+  </div>
+
+  <h3 id="api-vectorlayer">VectorLayer</h3>
+  <div class="api-class">
+    <div class="api-class-header"><span class="api-class-name">VectorLayer</span><span class="api-class-type">dataclass</span></div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">VectorLayer</span>(<span class="param">name</span>: str, <span class="param">visible</span>=True, <span class="param">geojson</span>={...}, <span class="param">style</span>={})</div>
+      <div class="api-desc">A styled vector layer backed by a GeoJSON FeatureCollection. The supplied <code class="ci">style</code> is merged over the defaults documented above.</div>
+      <div class="api-params">
+        <div class="api-param-row"><div class="api-param-name">name</div><div class="api-param-type">str</div><div class="api-param-desc">Layer identifier; must be unique within a Map.</div></div>
+        <div class="api-param-row"><div class="api-param-name">geojson</div><div class="api-param-type">dict</div><div class="api-param-desc">A GeoJSON FeatureCollection. Points, lines and polygons all supported.</div></div>
+        <div class="api-param-row"><div class="api-param-name">style</div><div class="api-param-type">dict</div><div class="api-param-desc">Style overrides (see Styling).</div></div>
+        <div class="api-param-row"><div class="api-param-name">visible</div><div class="api-param-type">bool</div><div class="api-param-desc">Whether the layer renders. Default True.</div></div>
+      </div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">feature_count</span> → <span class="ret">int</span> <span style="color:var(--text-muted)">(property)</span></div>
+      <div class="api-desc">Number of features in the layer.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">set_style</span>(**<span class="param">kwargs</span>) → <span class="ret">VectorLayer</span></div>
+      <div class="api-desc">Update style properties in place. Returns <code class="ci">self</code> for chaining.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">filter</span>(<span class="param">predicate</span>) → <span class="ret">VectorLayer</span></div>
+      <div class="api-desc">Return a <em>new</em> layer with only the features whose properties satisfy <code class="ci">predicate(props)</code>. The original is untouched.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">to_spec</span>() → <span class="ret">dict</span></div>
+      <div class="api-desc">Serialize to the renderer spec embedded in exported HTML.</div>
+    </div>
+  </div>
+
+  <h3 id="api-read">read()</h3>
+  <div class="api-class">
+    <div class="api-class-header"><span class="api-class-name">read</span><span class="api-class-type">function</span></div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">read</span>(<span class="param">path</span>: str | Path, <span class="param">name</span>=None, **<span class="param">style</span>) → <span class="ret">VectorLayer</span></div>
+      <div class="api-desc">Read a vector dataset into a <code class="ci">VectorLayer</code>. <code class="ci">name</code> defaults to the file stem. Extra keyword args become style overrides. Raises <code class="ci">NotImplementedError</code> for formats needing GeoPandas when it is not installed, or for unsupported extensions.</div>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">full_workflow.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>import pygeospace as pgs
+
+<span class="tc"># Read GeoJSON and style it</span>
+cities = pgs.read("cities.geojson", color="#e53e3e", radius=9)
+
+<span class="tc"># Derive a filtered layer (original is unchanged)</span>
+big = cities.filter(lambda p: p["population"] > 8_000_000)
+big.name = "megacities"
+big.set_style(color="#1da3d8", radius=14)
+
+<span class="tc"># Compose a map and export</span>
+m = pgs.Map(center=(0, 25), zoom=1.5, basemap="carto-light")
+m.add_layer(cities)
+m.add_layer(big)
+out = m.save("map.html")
+print(f"Wrote {out} — {cities.feature_count} cities, {big.feature_count} megacities")</pre>
+  </div>
+</div>
+
+<!-- CLI -->
+<div class="doc-section alt" id="cli">
+  <div class="sec-label">CLI</div>
+  <h2 class="sec-title">Command-Line Reference</h2>
+  <p class="sec-sub">The <code class="ci">pygeospace</code> command wraps the same API for quick, scriptable map generation. Every command here is real; planned-but-unbuilt commands exit with a clear message instead of pretending to work.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">usage</span></div>
+    <pre>pygeospace [OPTIONS] COMMAND [ARGS]
+
+Options:
+  --version   Show the version and exit.
+  --help      Show this message and exit.
+
+Commands:
+  visualize   Read a vector file and write an interactive HTML map.
+  info        Print summary information about a vector dataset.
+  version     Print the version.</pre>
+  </div>
+
+  <h3 id="cli-visualize">visualize</h3>
+  <p>Read a vector file and write a standalone interactive HTML map.</p>
+  <div class="flag-table">
+    <div class="flag-row hdr"><div class="flag-name" style="color:var(--text-muted)">Flag</div><div class="flag-type" style="color:var(--text-muted)">Type</div><div class="flag-desc" style="color:var(--text-muted)">Description</div></div>
+    <div class="flag-row"><div class="flag-name">PATH</div><div class="flag-type">arg</div><div class="flag-desc">Input vector file (GeoJSON, or any <code class="ci">[formats]</code> type). Required.</div></div>
+    <div class="flag-row"><div class="flag-name">-o, --output</div><div class="flag-type">path</div><div class="flag-desc">Output HTML file.<div class="flag-default">map.html</div></div></div>
+    <div class="flag-row"><div class="flag-name">--color</div><div class="flag-type">string</div><div class="flag-desc">Feature color (any CSS color).<div class="flag-default">#2b6cb0</div></div></div>
+    <div class="flag-row"><div class="flag-name">--radius</div><div class="flag-type">int</div><div class="flag-desc">Point radius in pixels.<div class="flag-default">6</div></div></div>
+    <div class="flag-row"><div class="flag-name">--basemap</div><div class="flag-type">choice</div><div class="flag-desc"><code class="ci">carto-light</code>, <code class="ci">carto-dark</code>, <code class="ci">osm</code>.<div class="flag-default">carto-light</div></div></div>
+    <div class="flag-row"><div class="flag-name">--zoom</div><div class="flag-type">float</div><div class="flag-desc">Initial zoom level.<div class="flag-default">2.0</div></div></div>
+  </div>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">visualize examples</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="tc"># Minimal</span>
+pygeospace visualize cities.geojson
+
+<span class="tc"># Styled, dark basemap, custom output</span>
+pygeospace visualize cities.geojson \
+  -o out/cities.html \
+  --color "#e53e3e" --radius 9 \
+  --basemap carto-dark --zoom 3</pre>
+  </div>
+
+  <h3 id="cli-info">info</h3>
+  <p>Print a quick JSON summary of a dataset — feature count, geometry types, and property keys.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">info</span></div>
+    <pre>pygeospace info cities.geojson
+<span class="tc"># {</span>
+<span class="tc">#   "file": "cities.geojson",</span>
+<span class="tc">#   "features": 4,</span>
+<span class="tc">#   "geometry_types": ["Point"],</span>
+<span class="tc">#   "property_keys": ["city", "population"]</span>
+<span class="tc"># }</span></pre>
+  </div>
+</div>
+
+<!-- EXAMPLES -->
+<div class="doc-section" id="examples">
+  <div class="sec-label">Examples</div>
+  <h2 class="sec-title">Copy-paste recipes</h2>
+  <p class="sec-sub">Each example is self-contained and runs against the current release.</p>
+
+  <h3>A point map from inline data</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">cities.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>import pygeospace as pgs
+
+cities = {
+    "type": "FeatureCollection",
+    "features": [
+        {"type": "Feature",
+         "geometry": {"type": "Point", "coordinates": [-0.13, 51.51]},
+         "properties": {"city": "London", "population": 8982000}},
+        {"type": "Feature",
+         "geometry": {"type": "Point", "coordinates": [-0.19, 5.60]},
+         "properties": {"city": "Accra", "population": 2388000}},
+        {"type": "Feature",
+         "geometry": {"type": "Point", "coordinates": [139.69, 35.69]},
+         "properties": {"city": "Tokyo", "population": 13960000}},
+    ],
+}
+
+layer = pgs.VectorLayer(name="cities", geojson=cities,
+                        style={"color": "#e53e3e", "radius": 9})
+pgs.Map(center=(0, 25), zoom=1.5).add_layer(layer).save("cities.html")</pre>
+  </div>
+
+  <h3 id="example-filter">Filtering features into a second layer</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">filter.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>import pygeospace as pgs
+
+cities = pgs.read("cities.geojson")
+mega = cities.filter(lambda p: p["population"] > 8_000_000)
+mega.name = "megacities"
+mega.set_style(color="#1da3d8", radius=14)
+
+m = pgs.Map(center=(0, 25), zoom=1.5)
+m.add_layer(cities)   <span class="tc"># all cities, default blue</span>
+m.add_layer(mega)     <span class="tc"># big ones, emphasized on top</span>
+m.save("filtered.html")</pre>
+  </div>
+
+  <h3 id="example-file">Reading a Shapefile or GeoPackage</h3>
+  <p>Requires <code class="ci">pip install "pygeospace[formats]"</code>.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">from_file.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>import pygeospace as pgs
+
+<span class="tc"># Any GeoPandas-readable vector format</span>
+regions = pgs.read("regions.gpkg", color="#059669", opacity=0.5)
+pgs.Map(center=(0, 25), zoom=4, basemap="osm") \
+   .add_layer(regions) \
+   .save("regions.html")</pre>
+  </div>
+</div>
+
+<!-- CURRENT SCOPE -->
+<div class="doc-section alt" id="scope">
+  <div class="sec-label">Reference</div>
+  <h2 class="sec-title">Current Scope — what's in, what's not</h2>
+  <p class="sec-sub">pygeospace is an early foundation. This section is deliberately explicit so you can tell, at a glance, whether it fits your use case today.</p>
+  <div class="sec-grid">
+    <div class="sec-card">
+      <div class="sec-card-title">✅ In v0.1.0</div>
+      <ul class="sec-list">
+        <li>Read GeoJSON (stdlib) and GeoPandas formats (optional extra)</li>
+        <li>Styled vector layers: points, lines, polygons</li>
+        <li>Immutable <code class="ci">filter()</code> and chainable <code class="ci">set_style()</code></li>
+        <li>Three built-in basemaps</li>
+        <li>Standalone interactive HTML export (MapLibre GL)</li>
+        <li>Click popups + navigation controls in output</li>
+        <li>A small CLI: <code class="ci">visualize</code>, <code class="ci">info</code>, <code class="ci">version</code></li>
+      </ul>
+    </div>
+    <div class="sec-card">
+      <div class="sec-card-title">○ Not built yet</div>
+      <ul class="sec-list todo">
+        <li>Raster / COG layers and a tile server</li>
+        <li>Point-cloud and 3D / globe rendering</li>
+        <li>Real-time / streaming layers</li>
+        <li>On-the-fly analytics (NDVI, clustering, networks)</li>
+        <li>Choropleth classification + legends</li>
+        <li>WebGPU / vector-tile performance paths</li>
+        <li>Static image (PNG/PDF/SVG) export</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alert alert-info"><strong>Design principle:</strong> unbuilt features fail loudly. Reading an unsupported format, for instance, raises <code class="ci">NotImplementedError</code> naming exactly what to install or which formats are supported — never a silent no-op.</div>
+</div>
+
+<!-- ROADMAP -->
+<div class="doc-section" id="roadmap">
+  <div class="sec-label">Roadmap</div>
+  <h2 class="sec-title">Roadmap</h2>
+  <p class="sec-sub">A realistic path from this foundation. Phases are ordered by dependency and effort; dates are intentionally omitted until work is underway.</p>
+  <div class="roadmap-grid">
+    <div class="rm-card done">
+      <div class="rm-version">v0.1.0</div>
+      <div class="rm-title">Foundation</div>
+      <div class="rm-date done">✓ Current release</div>
+      <ul class="rm-items">
+        <li class="done">Map / VectorLayer / read API</li>
+        <li class="done">GeoJSON + GeoPandas readers</li>
+        <li class="done">Standalone HTML export</li>
+        <li class="done">CLI (visualize / info / version)</li>
+        <li class="done">Test suite + packaging</li>
+      </ul>
+    </div>
+    <div class="rm-card planned">
+      <div class="rm-version">v0.2.0</div>
+      <div class="rm-title">Vector depth</div>
+      <div class="rm-date planned">○ Planned</div>
+      <ul class="rm-items">
+        <li class="todo">Choropleth: Jenks / quantile + legend</li>
+        <li class="todo">H3 clustering for dense points</li>
+        <li class="todo">On-the-fly reprojection (pyproj)</li>
+        <li class="todo">Line/polygon styling options</li>
+      </ul>
+    </div>
+    <div class="rm-card planned">
+      <div class="rm-version">v0.3.0+</div>
+      <div class="rm-title">Raster, scale &amp; 3D</div>
+      <div class="rm-date planned">○ Planned</div>
+      <ul class="rm-items">
+        <li class="todo">COG tiles + NDVI (rio-tiler)</li>
+        <li class="todo">Vector tiles + deck.gl for scale</li>
+        <li class="todo">Streaming (WebSocket) layer</li>
+        <li class="todo">3D / globe via CesiumJS</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alert alert-warn" style="margin-top:20px;"><strong>A note on scale claims:</strong> "billions of points" in a browser is achieved through tiling and aggregation, not by rendering every feature. Performance targets here will be stated as frames-per-second on named hardware against fixed datasets — measured, never asserted.</div>
+</div>
+
+<!-- CONTRIBUTING -->
+<div class="doc-section alt" id="contributing">
+  <div class="sec-label">Community</div>
+  <h2 class="sec-title">Contributing</h2>
+  <p class="sec-sub">The codebase is small and approachable — a good place to add a feature end to end. The most useful next contributions are the v0.2.0 items above.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">dev setup</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre><span class="tc"># Clone and install in editable mode with dev + formats extras</span>
+git clone https://github.com/your-org/pygeospace
+cd pygeospace
+pip install -e ".[dev,formats]"
+
+<span class="tc"># Run the tests</span>
+pytest          <span class="tc"># or: PYTHONPATH=. python tests/test_core.py</span>
+
+<span class="tc"># Build distribution artifacts</span>
+python -m build
+twine check dist/*</pre>
+  </div>
+  <div class="alert alert-info"><strong>Before you publish:</strong> <code class="ci">pygeospace</code> may be taken on PyPI. Pick a unique distribution name and verify it with <code class="ci">curl -s -o /dev/null -w "%{http_code}" https://pypi.org/pypi/&lt;name&gt;/json</code> (404 = available). Keep the package description truthful to what the code actually does.</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="f-logo">🗺️ <span>py</span>geospace</div>
+      <div class="f-desc">A small, honest geospatial visualization toolkit for Python. Read vector data, style it, and export an interactive map. MIT licensed.</div>
+      <div class="f-badges">
+        <span class="pill">v0.1.0</span>
+        <span class="pill">MIT</span>
+        <span class="pill">Python 3.10+</span>
+      </div>
+    </div>
+    <div class="f-col">
+      <div class="f-col-title">Docs</div>
+      <ul>
+        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="#concepts">Concepts</a></li>
+        <li><a href="#api">Python API</a></li>
+        <li><a href="#cli">CLI</a></li>
+        <li><a href="#examples">Examples</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <div class="f-col-title">Reference</div>
+      <ul>
+        <li><a href="#scope">Current Scope</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <div class="f-col-title">Community</div>
+      <ul>
+        <li><a href="https://github.com/your-org/pygeospace" target="_blank">GitHub</a></li>
+        <li><a href="https://github.com/your-org/pygeospace/issues" target="_blank">Issues</a></li>
+        <li><a href="https://github.com/your-org/pygeospace/discussions" target="_blank">Discussions</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 pygeospace contributors. Released under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</div>
+    <div class="footer-built">pygeospace v0.1.0 · docs</div>
+  </div>
+</footer>
+
+</main>
+</div>
+
+<script>
+/* ── Theme toggle ── */
+const toggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+toggle.addEventListener('click', () => {
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  toggle.textContent = isDark ? '🌙' : '☀️';
+});
+
+/* ── Install tabs ── */
+const cmds = {
+  core: 'pip install pygeospace',
+  formats: 'pip install "pygeospace[formats]"',
+  dev: 'pip install "pygeospace[dev,formats]"'
+};
+function setInstall(k, btn) {
+  document.getElementById('install-cmd').textContent = cmds[k];
+  document.querySelectorAll('.itab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function copyInstall() {
+  navigator.clipboard.writeText(document.getElementById('install-cmd').textContent).catch(() => {});
+}
+
+/* ── Copy code blocks ── */
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'copied!';
+    setTimeout(() => { btn.textContent = orig; }, 1500);
+  }).catch(() => {});
+}
+
+/* ── Terminal demo (outputs mirror the real CLI) ── */
+const termOutputs = {
+  version: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace --version</span>
+<span class="term-out">pygeospace, version 0.1.0</span>`,
+
+  help: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace --help</span>
+
+<span class="term-out">Usage: pygeospace [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="term-out">  pygeospace — a small, honest geospatial visualization toolkit.</span>
+
+<span class="term-out">Options:</span>
+<span class="term-out">  --version   Show the version and exit.</span>
+<span class="term-out">  --help      Show this message and exit.</span>
+
+<span class="term-out">Commands:</span>
+<span class="term-info">  visualize</span>  <span class="term-out">Read a vector file and write an interactive HTML map.</span>
+<span class="term-info">  info</span>       <span class="term-out">Print summary information about a vector dataset.</span>
+<span class="term-info">  version</span>    <span class="term-out">Print the version.</span>`,
+
+  info: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace info cities.geojson</span>
+<span class="term-out">{
+  "file": "cities.geojson",
+  "features": 4,
+  "geometry_types": [
+    "Point"
+  ],
+  "property_keys": [
+    "city",
+    "population"
+  ]
+}</span>`,
+
+  visualize: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace visualize cities.geojson -o map.html --color "#e53e3e" --radius 9</span>
+<span class="term-ok">Wrote /home/you/map.html (4 features).</span>
+
+<span class="term-out"># Open map.html in any browser:</span>
+<span class="term-out">#   • pan / zoom / navigation controls</span>
+<span class="term-out">#   • click a point to see its properties</span>`,
+
+  visualize_missing: `<span class="term-prompt">$ </span><span class="term-cmd">pygeospace visualize points.las -o map.html</span>
+<span class="term-err">Error: No reader for '.las' yet. Supported now: ['.geojson', '.json'];</span>
+<span class="term-err">with GeoPandas installed: ['.fgb', '.gml', '.gpkg', '.gpx', '.kml', '.shp'].</span>
+
+<span class="term-out"># Point clouds (.las/.laz) are on the roadmap — see Roadmap → v0.3.0+.</span>`
+};
+
+const termInputs = {
+  version: 'pygeospace --version',
+  help: 'pygeospace --help',
+  info: 'pygeospace info cities.geojson',
+  visualize: 'pygeospace visualize cities.geojson -o map.html --color "#e53e3e" --radius 9',
+  visualize_missing: 'pygeospace visualize points.las -o map.html'
+};
+
+function loadCmd() {
+  const key = document.getElementById('termSelect').value;
+  document.getElementById('termInput').value = termInputs[key];
+  document.getElementById('termBody').innerHTML =
+    `<span class="term-prompt">$ </span><span class="term-cmd">${termInputs[key].replace(/</g,'&lt;')}</span>\n<span class="term-out">Click ▶ Run to execute...</span>`;
+}
+
+function runCmd() {
+  const key = document.getElementById('termSelect').value;
+  const body = document.getElementById('termBody');
+  body.innerHTML = `<span class="term-out">Running...</span>`;
+  setTimeout(() => {
+    body.innerHTML = termOutputs[key] || `<span class="term-err">Unknown command.</span>`;
+    body.scrollTop = 0;
+  }, 280);
+}
+
+/* ── Active sidebar link on scroll ── */
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.sb-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    }
+  });
+}, { rootMargin: '-56px 0px -70% 0px', threshold: 0 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
