@@ -252,6 +252,7 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
     <a href="#concept-raster" class="sb-link">Rasters &amp; Imagery</a>
     <a href="#concept-spectral" class="sb-link">Spectral Analysis</a>
     <a href="#concept-3d" class="sb-link">The 3D Engine</a>
+    <a href="#concept-globe" class="sb-link">3D Globe (Cesium)</a>
     <a href="#concept-export" class="sb-link">Interactive Export</a>
   </div>
   <div class="sb-section">
@@ -260,6 +261,8 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
     <a href="#api-glance" class="sb-link sub">At a glance</a>
     <a href="#api-model" class="sb-link sub">Mental model</a>
     <a href="#api-map" class="sb-link sub">Map</a>
+    <a href="#api-helpers" class="sb-link sub">Helpers &amp; I/O</a>
+    <a href="#api-globe" class="sb-link sub">Globe export</a>
     <a href="#api-camera" class="sb-link sub">Camera3D</a>
     <a href="#api-analytics" class="sb-link sub">Analytics</a>
   </div>
@@ -274,6 +277,7 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
     <div class="sb-title">Examples</div>
     <a href="#examples" class="sb-link">Vector map</a>
     <a href="#example-imagery" class="sb-link">Satellite imagery</a>
+    <a href="#example-globe" class="sb-link">3D globe</a>
     <a href="#example-3d" class="sb-link">3D terrain</a>
   </div>
   <div class="sb-section">
@@ -292,9 +296,9 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
 
 <!-- HERO -->
 <div class="hero" id="overview">
-  <div class="badge"><span class="badge-dot"></span>v0.6.1 · 2D + true 3D · 100 tests passing</div>
+  <div class="badge"><span class="badge-dot"></span>v0.6.1 · 2D · true 3D · 3D globe · 105 tests passing</div>
   <h1 class="hero-title"><strong>PyGeoSpace</strong> Documentation</h1>
-  <p class="hero-sub">A geospatial visualization toolkit for Python that spans 2D web maps and true 3D scenes. Stack vector, raster and point-cloud layers; run spectral and spatial analytics; and export either a rich interactive HTML map — with a full control suite — or a real 3D model. No build step, no server.</p>
+  <p class="hero-sub">A geospatial visualization toolkit for Python that spans 2D web maps, true 3D scenes, and an interactive 3D globe. Stack vector, raster and point-cloud layers; read a whole satellite scene in one call; run spectral and spatial analytics; and export a rich interactive map, a Cesium globe, a static image, or a real 3D model. No build step, no server, no access token required.</p>
   <div class="hero-actions">
     <a href="#quickstart" class="btn-primary">Quick Start →</a>
     <a href="#api" class="btn-outline">Python API</a>
@@ -305,12 +309,12 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border);padding:4
     </a>
   </div>
   <div class="hero-stats">
-    <div class="hstat"><div class="hstat-val">2D + 3D</div><div class="hstat-label">Render modes</div></div>
+    <div class="hstat"><div class="hstat-val">2D · 3D · Globe</div><div class="hstat-label">Render modes</div></div>
     <div class="hstat"><div class="hstat-val">5</div><div class="hstat-label">Built-in basemaps</div></div>
     <div class="hstat"><div class="hstat-val">6</div><div class="hstat-label">3D export formats</div></div>
-    <div class="hstat"><div class="hstat-val">100</div><div class="hstat-label">Tests passing</div></div>
+    <div class="hstat"><div class="hstat-val">105</div><div class="hstat-label">Tests passing</div></div>
   </div>
-  <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">Vector via GeoPandas · rasters via rasterio · true 3D via PyVista · interactive maps via deck.gl. Heavy backends are optional extras.</p>
+  <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">Vector via GeoPandas · rasters via rasterio · true 3D via PyVista · 2D maps via deck.gl · 3D globe via CesiumJS (token-free). Heavy backends are optional extras.</p>
 </div>
 
 <!-- INSTALL BAR -->
@@ -484,6 +488,26 @@ m.export_3d("terrain.glb")   <span class="tc"># 3D model</span></div>
     <div class="fmt-card"><div class="fmt-name">.obj / .vtk</div><div class="fmt-flag">mesh · sci</div><div class="fmt-desc">DCC and scientific visualization.</div></div>
   </div>
 
+  <h3 id="concept-globe">3D Globe (CesiumJS)</h3>
+  <p>Call <code class="ci">save("globe.html", engine="cesium")</code> (or <code class="ci">to_cesium_html()</code>) and the <em>same</em> map renders on an interactive 3D globe. Your vector layers become GeoJSON draped on the terrain; raster layers become georeferenced imagery overlays. Cesium's built-in scene-mode picker toggles between a 3D globe, a 2.5D Columbus view, and a flat 2D map — so one file visualizes the data three ways.</p>
+  <div class="feat-grid">
+    <div class="feat-cell"><div class="feat-icon green">🌍</div><div class="feat-title">2D · 2.5D · 3D</div><div class="feat-body">One scene-mode picker switches the same data between a flat map, Columbus view, and a full globe.</div></div>
+    <div class="feat-cell"><div class="feat-icon green">🔓</div><div class="feat-title">Token-free</div><div class="feat-body">Open OSM / Carto / Esri imagery by default — works anywhere. A Cesium Ion token is optional, for world terrain.</div></div>
+    <div class="feat-cell"><div class="feat-icon green">🧱</div><div class="feat-title">Same layers</div><div class="feat-body">Vectors → GeoJSON, rasters → imagery overlays, plus a layer panel and imagery switcher.</div></div>
+  </div>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">globe.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>import pygeospace as pgs
+
+m = pgs.Map(title="NYC")
+m.add_layer(gdf, name="Landmarks")
+m.add_composite(stack, "true_color")
+m.save("globe.html", engine="cesium")        <span class="tc"># 3D globe, no token</span>
+<span class="tc"># With premium terrain (optional):</span>
+<span class="tc"># m.to_cesium_html(ion_token="…", terrain=True)</span></pre>
+  </div>
+  <div class="alert alert-info"><strong>User-friendly by default:</strong> no Cesium Ion key is required to get a working globe. Supplying <code class="ci">ion_token=</code> unlocks Cesium World Terrain and premium imagery, but the open-imagery default works out of the box for users anywhere.</div>
+
   <h3 id="concept-export">Interactive HTML export</h3>
   <p><code class="ci">to_html()</code> returns the map as a string; <code class="ci">save(path)</code> writes it and returns the resolved path. The 2D page ships with a control suite layered over the deck.gl canvas:</p>
   <div class="feat-grid">
@@ -505,7 +529,8 @@ m.export_3d("terrain.glb")   <span class="tc"># 3D model</span></div>
     <pre>import pygeospace as pgs
 from pygeospace import (Map, Camera3D, Layer, VectorLayer,
                         RasterLayer, PointCloudLayer, StreamLayer,
-                        ViewState, read_file, detect_format)
+                        ViewState, read, read_file, read_bands,
+                        find_scene_bands, detect_format)
 from pygeospace.analytics.spectral import spectral_index, composite</pre>
   </div>
 
@@ -519,6 +544,7 @@ from pygeospace.analytics.spectral import spectral_index, composite</pre>
         <tr><td><code>VectorLayer</code> · <code>RasterLayer</code></td><td>classes</td><td>Typed layers you stack on a Map</td></tr>
         <tr><td><code>PointCloudLayer</code> · <code>StreamLayer</code></td><td>classes</td><td>3D points and live data sources</td></tr>
         <tr><td><code>read_file()</code> · <code>detect_format()</code></td><td>functions</td><td>Load data / sniff a format</td></tr>
+        <tr><td><code>read_bands()</code> · <code>read()</code></td><td>functions</td><td>Stack per-band satellite files / friendly read alias</td></tr>
         <tr><td><code>spectral_index()</code> · <code>composite()</code></td><td>functions</td><td>Index math and band composites</td></tr>
       </tbody>
     </table>
@@ -600,6 +626,48 @@ from pygeospace.analytics.spectral import spectral_index, composite</pre>
     <div class="api-method">
       <div class="api-sig"><span class="fn">remove_layer</span>(<span class="param">name</span>) → <span class="ret">bool</span> &nbsp;·&nbsp; <span class="fn">to_deck</span>() → <span class="ret">pydeck.Deck</span></div>
       <div class="api-desc">Remove a layer by name; or drop down to the underlying pydeck object.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span style="color:var(--text-muted)">inspection:</span> <span class="fn">len</span>(m) &nbsp;·&nbsp; <span class="fn">iter</span>(m) &nbsp;·&nbsp; m[<span class="param">i</span>] / m[<span class="param">"name"</span>] &nbsp;·&nbsp; <span class="param">"name"</span> in m &nbsp;·&nbsp; m.<span class="fn">layer_names</span></div>
+      <div class="api-desc">A Map behaves like a container of its layers: count them, iterate them, fetch one by index or name, test membership, or list <code class="ci">layer_names</code>. <code class="ci">repr(m)</code> shows the mode and layer names.</div>
+    </div>
+  </div>
+
+  <h3 id="api-helpers">Helpers &amp; I/O</h3>
+  <p>Convenience functions and methods that collapse common multi-step jobs into one call. <code class="ci">read_bands</code> in particular folds an entire satellite-stacking pipeline into a single line.</p>
+  <div class="api-class">
+    <div class="api-class-header"><span class="api-class-name">read_bands</span><span class="api-class-type">function</span></div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">pgs.read_bands</span>(<span class="param">source</span>, *, <span class="param">bbox</span>=None, <span class="param">sensor</span>="auto", <span class="param">max_dim</span>=1024, <span class="param">scale</span>=None, <span class="param">offset</span>=None) → <span class="ret">RasterLayer</span></div>
+      <div class="api-desc">Discover per-band satellite files (Sentinel-2 <code class="ci">B02…B11</code>, Landsat <code class="ci">SR_B2…SR_B6</code>), window + reproject to <code class="ci">bbox</code>, apply reflectance scaling, and stack them in <code class="ci">[blue, green, red, nir, swir]</code> order. <code class="ci">source</code> is a scene directory, a list of paths, or a role→path dict. Missing bands zero-fill (with a warning); red + nir are required.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">pgs.find_scene_bands</span>(<span class="param">dir</span>) → <span class="ret">(sensor, {role: path})</span> &nbsp;·&nbsp; <span class="fn">pgs.read</span>(<span class="param">path</span>) <span style="color:var(--text-muted)">(alias of read_file)</span></div>
+      <div class="api-desc">Discover bands without stacking; or read any vector/raster file into the right layer.</div>
+    </div>
+  </div>
+  <div class="api-class">
+    <div class="api-class-header"><span class="api-class-name">Map composites</span><span class="api-class-type">methods</span></div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">add_composite</span>(<span class="param">source</span>, <span class="param">kind</span>="true_color", *, <span class="param">name</span>=None) → <span class="ret">RasterLayer</span></div>
+      <div class="api-desc">Add a multi-band raster as a named composite: <code class="ci">true_color</code> (3-2-1), <code class="ci">false_color</code> / <code class="ci">color_ir</code> (4-3-2), <code class="ci">agriculture</code> (5-4-3). See <code class="ci">Map.COMPOSITES</code>.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">add_bands</span>(<span class="param">source</span>, <span class="param">composite</span>="true_color", *, <span class="param">bbox</span>=None, **<span class="param">read_kwargs</span>) → <span class="ret">RasterLayer</span></div>
+      <div class="api-desc">Read per-band files <em>and</em> add them as a composite in one call — <code class="ci">read_bands</code> + <code class="ci">add_composite</code> combined.</div>
+    </div>
+  </div>
+
+  <h3 id="api-globe">Globe export</h3>
+  <div class="api-class">
+    <div class="api-class-header"><span class="api-class-name">CesiumJS globe</span><span class="api-class-type">methods</span></div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">save</span>(<span class="param">path</span>, *, <span class="param">engine</span>="deck", <span class="param">ion_token</span>=None, <span class="param">terrain</span>=False) &nbsp;·&nbsp; <span class="fn">to_html</span>(*, <span class="param">engine</span>="deck")</div>
+      <div class="api-desc"><code class="ci">engine="deck"</code> (default) renders the 2D map with controls; <code class="ci">engine="cesium"</code> renders an interactive 3D globe showing the same layers, with a built-in 2D / 2.5D / 3D scene toggle.</div>
+    </div>
+    <div class="api-method">
+      <div class="api-sig"><span class="fn">to_cesium_html</span>(*, <span class="param">ion_token</span>=None, <span class="param">terrain</span>=False) → <span class="ret">str</span></div>
+      <div class="api-desc">Shortcut for the globe engine. Token-free by default (open imagery); pass an Ion token + <code class="ci">terrain=True</code> for Cesium World Terrain.</div>
     </div>
   </div>
 
@@ -739,20 +807,44 @@ m.add_heatmap(list(landmarks.values()), name="Density")
 m.fit().save("nyc.html")</pre>
   </div>
 
-  <h3 id="example-imagery">Satellite imagery composites</h3>
+  <h3 id="example-imagery">Satellite imagery — one call per composite</h3>
+  <p>With <code class="ci">read_bands</code>, the whole discover / window / reproject / scale / stack pipeline is a single line:</p>
   <div class="code-block">
     <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">imagery.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
     <pre>import pygeospace as pgs
+from pygeospace.analytics.spectral import spectral_index
 
-<span class="tc"># stack: blue=1, green=2, red=3, nir=4, swir=5 (RasterLayer)</span>
-for key, bands in {"true_color": [3, 2, 1],
-                   "false_color_ir": [4, 3, 2],
-                   "agriculture": [5, 4, 3]}.items():
-    m = pgs.Map(title=key)
-    m.add_basemap()
-    m.add_raster(stack, bands=bands, opacity=1.0)
-    m.fit().save(f"{key}.html")   <span class="tc"># interactive</span>
-    m.save(f"{key}.png")          <span class="tc"># georeferenced image</span></pre>
+<span class="tc"># Read &amp; stack a whole scene directory in one call (auto sensor + bbox window)</span>
+stack = pgs.read_bands("data/satellite/",
+                       bbox=(-74.05, 40.68, -73.90, 40.82))
+
+<span class="tc"># Named composites — true_color, false_color, agriculture</span>
+for kind in ("true_color", "false_color", "agriculture"):
+    m = pgs.Map(title=kind).add_basemap()
+    m.add_composite(stack, kind)
+    m.fit().save(f"{kind}.html")   <span class="tc"># interactive</span>
+    m.save(f"{kind}.png")          <span class="tc"># georeferenced image</span>
+
+<span class="tc"># Index math — band order is already correct</span>
+ndvi = spectral_index(stack, "ndvi")</pre>
+  </div>
+
+  <h3 id="example-globe">A 3D globe (CesiumJS)</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="cb-dot" style="background:#ff5f56"></div><div class="cb-dot" style="background:#ffbd2e"></div><div class="cb-dot" style="background:#27c93f"></div><span class="cb-fname">globe.py</span><button class="cb-copy" onclick="copyCode(this)">copy</button></div>
+    <pre>import pygeospace as pgs
+
+m = pgs.Map(title="NYC")
+m.add_layer(gdf, name="Landmarks")
+m.add_bands("data/satellite/", "true_color",      <span class="tc"># read + stack + composite</span>
+            bbox=(-74.05, 40.68, -73.90, 40.82))
+
+<span class="tc"># One file → 3D globe with a 2D / 2.5D / 3D scene toggle. No token needed.</span>
+m.save("globe.html", engine="cesium")
+
+print(m)                       <span class="tc"># &lt;Map mode=2d · 2 layers: [Landmarks, True Color]&gt;</span>
+print(m.layer_names, len(m))   <span class="tc"># ['Landmarks', 'True Color'] 2</span>
+print(m["Landmarks"])          <span class="tc"># fetch a layer by name</span></pre>
   </div>
 
   <h3 id="example-3d">3D terrain with a fly-through</h3>
@@ -828,6 +920,14 @@ m.export_3d("terrain.glb")               <span class="tc"># model for Blender/th
       </div>
       <div class="gmeta"><div class="gtitle">3D terrain render</div><div class="gdesc">A PyVista terrain scene rendered headlessly to PNG, with observation points and a scripted camera.</div><div class="gpath">output/3d/terrain.png</div></div>
     </div>
+    <div class="gcard">
+      <div class="gthumb">
+        <img src="gallery/globe.png" alt="CesiumJS 3D globe" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gfallback" style="display:none;"><span class="gf-ico">🌍</span><span>gallery/globe.png</span><span style="opacity:.6">place image here</span></div>
+        <span class="gtag now">v0.6 · live</span>
+      </div>
+      <div class="gmeta"><div class="gtitle">CesiumJS 3D globe</div><div class="gdesc">The same vectors + imagery on an interactive globe, with a 2D / 2.5D / 3D scene toggle. Token-free.</div><div class="gpath">output/globe/nyc_globe.html</div></div>
+    </div>
   </div>
 
   <div class="alert alert-info"><strong>Tip:</strong> the spectral and 3D outputs are also exported as interactive <code class="ci">.html</code> — the gallery shows the still frames, but <code class="ci">output/spectral/ndvi.html</code> and <code class="ci">output/3d/terrain.html</code> are fully interactive.</div>
@@ -844,11 +944,14 @@ m.export_3d("terrain.glb")               <span class="tc"># model for Blender/th
       <ul class="sec-list">
         <li>2D maps: vector, raster, heatmap, text, basemaps</li>
         <li>Rich interactive HTML (layer panel, basemap switch, scale bar, coords, legend, fullscreen)</li>
+        <li><strong>3D globe via CesiumJS</strong> — same layers, 2D/2.5D/3D toggle, token-free</li>
         <li>Georeferenced raster display + static PNG/PDF of imagery</li>
+        <li>One-call satellite stacking: <code class="ci">read_bands()</code>, <code class="ci">add_bands()</code>, <code class="ci">add_composite()</code></li>
         <li>Spectral indices: NDVI, NDWI, NDBI, SAVI, EVI + band composites</li>
         <li>True 3D via PyVista: terrain, surfaces, point clouds, extrusion</li>
         <li>3D export: HTML, glTF, GLB, STL, PLY, OBJ, VTK</li>
         <li>Scriptable <code class="ci">Camera3D</code> with keyframe fly-throughs</li>
+        <li>Container-style Map (<code class="ci">len</code>, iterate, <code class="ci">m["name"]</code>, <code class="ci">layer_names</code>)</li>
         <li>Analytics: metric buffers, overlays, K-means/DBSCAN/H3, choropleth</li>
         <li>Streaming layer, plugin manager, REST API + web server, CLI</li>
       </ul>
@@ -858,7 +961,7 @@ m.export_3d("terrain.glb")               <span class="tc"># model for Blender/th
       <ul class="sec-list todo">
         <li>Native COG tile server</li>
         <li>Vector tiles / WebGPU performance paths for very large data</li>
-        <li>Globe / CesiumJS rendering</li>
+        <li>Cesium World Terrain without a token (Ion key still needed for premium terrain)</li>
         <li>In-browser measure &amp; draw tools</li>
         <li>Time-series animation UI</li>
       </ul>
@@ -885,24 +988,25 @@ m.export_3d("terrain.glb")               <span class="tc"># model for Blender/th
     </div>
     <div class="rm-card done">
       <div class="rm-version">v0.6.x</div>
-      <div class="rm-title">True 3D + imagery</div>
+      <div class="rm-title">3D, imagery, globe &amp; ergonomics</div>
       <div class="rm-date done">✓ Current release</div>
       <ul class="rm-items">
         <li class="done">PyVista 3D terrain, point clouds, export</li>
         <li class="done">Spectral indices + band composites</li>
-        <li class="done">Raster display + static image export</li>
         <li class="done">Rich interactive HTML with controls</li>
+        <li class="done">CesiumJS 3D globe (token-free)</li>
+        <li class="done">One-call <code class="ci">read_bands</code> + friendlier Map API</li>
       </ul>
     </div>
     <div class="rm-card planned">
       <div class="rm-version">v0.7.0+</div>
-      <div class="rm-title">Scale &amp; globe</div>
+      <div class="rm-title">Scale &amp; interactivity</div>
       <div class="rm-date planned">○ Planned</div>
       <ul class="rm-items">
         <li class="todo">COG tile server + vector tiles</li>
         <li class="todo">In-browser measure / draw tools</li>
         <li class="todo">Time-series animation UI</li>
-        <li class="todo">Globe view (CesiumJS)</li>
+        <li class="todo">WebGPU performance path</li>
       </ul>
     </div>
   </div>
